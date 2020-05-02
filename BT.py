@@ -33,9 +33,9 @@ class bluetooth:
 
     def SerialReadString(self):
         # TODO: Get the information from Bluetooth. Notice that the return type should be transformed into hex.
-        waiting = self.ser.in_waiting   #返回接收快取中的位元組數
+        waiting = self.ser.in_waiting      #返回接收快取中的位元組數
         if waiting >= 0:
-            rv = self.ser.read(1).decode("utf-8") #從串列中讀取一個位元組，再轉成英文
+            rv = self.ser.read(1).decode("utf-8") #從串列中讀取一個位元組，再轉成英文字
             return rv
         return ""
 
