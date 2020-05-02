@@ -19,6 +19,22 @@ class Maze:
         self.nodes = []
         self.nd_dict = dict()  # key: index, value: the correspond node
 
+    def setNode(self):
+        for i in range(len(self.raw_data)):
+            index = int(self.raw_data[i][0])
+            self.nodes.append(Node(index))
+            ad_list = []
+            dis_list = []
+            for d in range(1,5): 
+                if self.raw_data[i][d] > 0:
+                    self.nodes[i].setSuccessor(int(self.raw_data[i][d]), d, int(self.raw_data[i][d+4]))
+                    ad_list.append(int(self.raw_data[i][d]))
+                    dis_list.append(int(self.raw_data[i][d+4]))
+            
+            self.nd_dict[int(self.raw_data[i][0])] = ad_list
+        print(self.nd_dict)
+
+
     def getStartPoint(self):
         if (len(self.nd_dict) < 2):
             print("Error: the start point is not included.")
@@ -48,3 +64,7 @@ class Maze:
 
     def strategy_2(self, nd_from, nd_to):
         return self.BFS_2(nd_from, nd_to)
+
+maze = Maze(r"C:\Users\Admin\Desktop\車車\src\Python\data\small_maze.csv")
+print(maze.raw_data)
+maze.setNode()

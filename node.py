@@ -22,7 +22,7 @@ class Node:
     def setSuccessor(self, successor, direction, length=1):
         self.Successors.append((successor, Direction(direction), int(length)))
         print("For Node {}, a successor {} is set.".format(self.index, self.Successors[-1]))
-        return
+        return self.Successors
 
     def getDirection(self, nd):
         # TODO : Return the direction of nd from the present node if nd is adjacent to the present node.
