@@ -65,6 +65,6 @@ class Maze:
     def strategy_2(self, nd_from, nd_to):
         return self.BFS_2(nd_from, nd_to)
 
-maze = Maze(r"C:\Users\Admin\Desktop\車車\src\Python\data\small_maze.csv")
+maze = Maze("data\small_maze.csv")
 print(maze.raw_data)
 maze.setNode()
