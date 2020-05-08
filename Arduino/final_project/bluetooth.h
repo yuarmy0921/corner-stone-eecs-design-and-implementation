@@ -11,7 +11,7 @@
 
 #include<SoftwareSerial.h>
 enum BT_CMD {
-  NOTHING,
+  NOTHING,TRUNRIGHT,TRUNLEFT,UTRUN,STOP
   // TODO: add your own command type here
 };
 
@@ -21,7 +21,13 @@ BT_CMD ask_BT(){
     if(BT.available()){
       // TODO:
       // 1. get cmd from SoftwareSerial object: BT
+      cmd = BT.read();
       // 2. link bluetooth message to your own command type
+      if(temp =='w'){messenger = NOTHING;}
+      if(temp =='a'){messenger = TURNLEFT;}
+      if(temp =='s'){messenger = STOP;}
+      if(temp =='d'){messenger = TURNRIGHT;}
+      if(temp =='r'){messenger = UTURN;}
       #ifdef DEBUG
       Serial.print("cmd : ");
       Serial.println(cmd);
