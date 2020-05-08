@@ -47,6 +47,8 @@ class Maze:
     def BFS(self, nd):
         # TODO : design your data structure here for your algorithm
         # Tips : return a sequence of nodes from the node to the nearest unexplored deadend
+        # considering Dijkstra
+
         return None
 
     def BFS_2(self, nd_from, nd_to):
@@ -68,3 +70,4 @@ class Maze:
 maze = Maze(r"C:\Users\Admin\Desktop\車車\src\Python\data\small_maze.csv")
 print(maze.raw_data)
 maze.setNode()
+print(maze.nodes[2].getSuccessors())
