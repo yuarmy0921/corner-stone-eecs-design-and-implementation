@@ -12,7 +12,7 @@ class Node:
         self.index = index
         # store successor as (Node, direction to node, distance)
         self.Successors = []
-        self.deadend = False
+        self.unvisited_deadend = False
 
     def getIndex(self):
         """ output: index (int). """
@@ -24,7 +24,7 @@ class Node:
 
     def setSuccessor(self, successor, direction, length=1):
         self.Successors.append((successor, Direction(direction), int(length)))
-        print("For Node {}, a successor {} is set.".format(self.index, self.Successors[-1]))
+        #print("For Node {}, a successor {} is set.".format(self.index, self.Successors[-1]))
         return self.Successors
 
     def isSuccessor(self, nd):
