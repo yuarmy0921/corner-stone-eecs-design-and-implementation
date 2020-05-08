@@ -48,14 +48,23 @@ class Maze:
         return self.nd_dict
 
     def BFS(self, nd):
+        """ for game mode 1.
+            input: (int) index of node being starting point.
+            output: (list) list of nodes index(int) showing the path to the nearest deadend. """
         # TODO : design your data structure here for your algorithm
         # Tips : return a sequence of nodes from the node to the nearest unexplored deadend
         # considering Dijkstra
+        distance = [99]*len(self.nodes)  # set inf = 99
+        distance[nd-1] = 0 # distance of nodes from nd
+        completed = [] # visited nodes
 
 
         return None
 
     def BFS_2(self, nd_from, nd_to):
+        """ for game mode 2.
+            input: (two int) index of starting point and endpoint.
+            output: (list) list of nodes index(int) showing the shotest path. """
         # TODO : similar to BFS but fixed start point and end point
         # Tips : return a sequence of nodes of the shortest path
         return None
@@ -74,5 +83,5 @@ class Maze:
 maze = Maze("data\small_maze.csv")
 #print(maze.raw_data)
 maze.setNode()
-print(maze.nodes[2].getDirection(4))
-print(maze.nodes[2].getDirection(1))
+print(maze.nodes[2].getSuccessors())
+print(maze.nodes[1].getDirection(1))

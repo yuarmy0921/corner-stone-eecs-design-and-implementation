@@ -27,11 +27,11 @@ class Node:
         print("For Node {}, a successor {} is set.".format(self.index, self.Successors[-1]))
         return self.Successors
 
-   def isSuccessor(self, nd):
-        for succ in self.Successors:
-            if succ[0] == nd: 
-                return True
-        return False
+    def isSuccessor(self, nd):
+            for succ in self.Successors:
+                if succ[0] == nd: 
+                    return True
+            return False
 
     def getDirection(self, nd):
         # TODO : Return the direction of nd from the present node if nd is adjacent to the present node.
