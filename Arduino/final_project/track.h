@@ -20,6 +20,31 @@ int extern _Tp;
 // Write the voltage to motor.
 void MotorWriting(double vL, double vR) {
   // TODO: use L298N to control motor voltage & direction
+  double truevR;
+  double truevL; 
+  if(vR<0){
+    truevR = -vR;
+    digitalWrite(IN3, HIGH);
+    digitalWrite(IN4, LOW);
+  }
+  else{
+    truevR = vR;
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+  }
+  if(vL<0){
+    truevL = -vL;
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+  }
+  else{
+    truevL = vL;
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+  }
+  analogWrite(ENA,truevR);
+  analogWrite(ENB,truevL);
+  
 }// MotorWriting
 
 // P/PID control Tracking
