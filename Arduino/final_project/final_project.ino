@@ -18,12 +18,12 @@
 // BlueTooth
 SoftwareSerial BT(9,8);   // TX,RX on bluetooth module, 請按照自己車上的接線寫入腳位
 // L298N, 請按照自己車上的接線寫入腳位(左右不一定要跟註解寫的一樣)
-#define MotorR_I1     7 //定義 I1 接腳（右）
-#define MotorR_I2     4 //定義 I2 接腳（右）
-#define MotorL_I3     3 //定義 I3 接腳（左）
-#define MotorL_I4     2 //定義 I4 接腳（左）
-#define MotorL_PWML    6 //定義 ENA (PWM調速) 接腳
-#define MotorR_PWMR    5 //定義 ENB (PWM調速) 接腳
+#define MotorL_I1     7 //定義 I1 接腳（右）
+#define MotorL_I2     4 //定義 I2 接腳（右）
+#define MotorR_I3     3 //定義 I3 接腳（左）
+#define MotorR_I4     2 //定義 I4 接腳（左）
+#define ENB    6 //定義 ENA (PWM調速) 接腳
+#define ENA    5 //定義 ENB (PWM調速) 接腳
 // 循線模組, 請按照自己車上的接線寫入腳位
 #define L3 A0
 #define L2 A1
@@ -56,12 +56,12 @@ void setup()
    SPI.begin();
    mfrc522.PCD_Init();
    //L298N pin
-   pinMode(MotorR_I1,   OUTPUT);
-   pinMode(MotorR_I2,   OUTPUT);
-   pinMode(MotorL_I3,   OUTPUT);
-   pinMode(MotorL_I4,   OUTPUT);
-   pinMode(MotorL_PWML, OUTPUT);
-   pinMode(MotorR_PWMR, OUTPUT);
+   pinMode(MotorL_I1,   OUTPUT);
+   pinMode(MotorL_I2,   OUTPUT);
+   pinMode(MotorR_I3,   OUTPUT);
+   pinMode(MotorR_I4,   OUTPUT);
+   pinMode(ENA, OUTPUT);
+   pinMode(ENB, OUTPUT);
    //tracking pin
    pinMode(L3, INPUT);
    pinMode(L2, INPUT);
@@ -83,8 +83,41 @@ void setup()
 // initalize parameter
 
 // variables for 循線模組
-int r2=0,r1=0,r3=0,l3=0,l1=0,l2=0;
-
+int l3, l2, l1, r1, r2, r3;
+double error;
+int flag=0;
+void Sensor(){
+  l3 = analogRead(L3);
+  l2 = analogRead(L2);
+  l1 = analogRead(L1);
+  r1 = analogRead(R1);
+  r2 = analogRead(R2);
+  r3 = analogRead(R3);
+  if(ask_BT()==5){flag=1;}
+  
+  if(flag==1){
+    if(l3+l2+l1+r1+r2+r3>4200){
+      char n;
+      send_msg(n);
+      if(ask_BT()==0){delay(300);}//讓車子剛好走到底，未調整
+      if(ask_BT()==1){delay(300);right_turn();}//讓車子剛好走到底，未調整
+      if(ask_BT()==2){delay(300);left_turn();}//讓車子剛好走到底，未調整
+      if(ask_BT()==3){
+        //讀卡片rfid
+        U_turn();
+      }
+      if(ask_BT()==4){quick_stop();}  
+    }
+    else{
+      tracking(l3,l2,l1,r1,r2,r3);
+    }
+  
+  }
+  else{
+    MotorWriting(0,0);
+  }
+}
+ 
 // variable for motor power
 int _Tp=90;
 
@@ -102,28 +135,35 @@ BT_CMD _cmd = NOTHING;
 
 void loop()
 {
+   Sensor();
+   /*
    // search graph
    if(_state == SEARCH_STATE) Search_Mode();
    // wait for command
    else if(_state == HAULT_STATE) Hault_Mode();
    SetState();
+   */
 }// loop
 
-void SetState()
-{
+/*
+ void SetState()
+{ 
+  Sensor();
   // TODO:
   // 1. Get command from bluetooth 
   // 2. Change state if need
 }// SetState
-
+*/
 void Hault_Mode()
-{
+{ 
   // TODO: let your car stay still
-  delay(10);
+  
 }// Hault_Mode
 
 void Search_Mode()
 {
   // TODO: let your car search graph(maze) according to bluetooth command from computer(python code)
 }// Search_Mode
+
+
 /*===========================define function===========================*/
