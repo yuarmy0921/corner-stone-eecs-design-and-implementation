@@ -14,7 +14,6 @@ class Action(IntEnum):
 
 class Maze:
     def __init__(self, filepath):
-        # TODO : read file and implement a data structure you like
         self.raw_data = pandas.read_csv(filepath).values
         self.nodes = []
         self.numbers = len(self.raw_data)
@@ -156,18 +155,18 @@ class Maze:
     def strategy_2(self, nd_from, nd_to):
         return self.Dijk_2(nd_from, nd_to)
 
-if __name__ == '__main__':
+
+def test():
     maze = Maze("data\medium_maze.csv")
     maze.setNode()
-    #for i in range(1, maze.numbers+1):
-    #    maze.Dijk(i)
-    #maze.Dijk_2(6,10)
-    # test
+    for i in range(1, maze.numbers+1):
+        maze.Dijk(i)
+    maze.Dijk_2(6,10)
     print(maze.getAction(1,3,2)) # (2,2)
     print(maze.getAction(2,3,2)) # (1,2)
     print(maze.getAction(3,3,2)) # (4,2)
     print(maze.getAction(4,3,2)) # (3,2)
     print(maze.getAction(1,3,9)) # (5,1)
 
-    
-C:\Users\Admin\Desktop\CheChe\Python\maze.py
+if __name__ == '__main__':
+    test()
