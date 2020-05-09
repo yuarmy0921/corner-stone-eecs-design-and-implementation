@@ -19,6 +19,9 @@ class interface:
             port = input("PC bluetooth port name: ")
         input("Press enter to start.")
         self.ser.SerialWrite('s')
+        
+    def tell_you(self, string):
+        print(string)
 
     def get_UID(self):
         return self.ser.SerialReadByte()

@@ -26,6 +26,8 @@ def main():
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
         maze.strategy()
+        #印出執行過程
+        interf.tell_you
 
     elif (sys.argv[1] == '1'):
         print("Mode 1: for treasure-hunting with rule 2")
@@ -39,8 +41,11 @@ def main():
         action = 1
         while(action):
             action = input("What should I do: ")
-            reception = interf.send_action(action)
-            print("I have already received: {}".format(reception))
+            if action == mz.Action:
+                reception = interf.send_action(action)
+                print("I have already received: {}".format(reception))
+            else:
+                print("You have send a wrong instruction. Please try again.")
 
 if __name__ == '__main__':
     main()
