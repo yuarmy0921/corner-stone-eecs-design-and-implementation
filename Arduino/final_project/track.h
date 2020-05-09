@@ -15,32 +15,34 @@
 
 /*===========================import variable===========================*/
 int extern _Tp;
+double extern error;
 /*===========================import variable===========================*/
 
 // Write the voltage to motor.
+
 void MotorWriting(double vL, double vR) {
   // TODO: use L298N to control motor voltage & direction
   double truevR;
   double truevL; 
   if(vR<0){
     truevR = -vR;
-    digitalWrite(IN3, HIGH);
-    digitalWrite(IN4, LOW);
+    digitalWrite(MotorR_I3, HIGH);
+    digitalWrite(MotorR_I4, LOW);
   }
   else{
     truevR = vR;
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, HIGH);
+    digitalWrite(MotorR_I3, LOW);
+    digitalWrite(MotorR_I4, HIGH);
   }
   if(vL<0){
     truevL = -vL;
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, HIGH);
+    digitalWrite(MotorL_I1, LOW);
+    digitalWrite(MotorL_I2, HIGH);
   }
   else{
     truevL = vL;
-    digitalWrite(IN1, HIGH);
-    digitalWrite(IN2, LOW);
+    digitalWrite(MotorL_I1, HIGH);
+    digitalWrite(MotorL_I2, LOW);
   }
   analogWrite(ENA,truevR);
   analogWrite(ENB,truevL);
@@ -48,6 +50,8 @@ void MotorWriting(double vL, double vR) {
 }// MotorWriting
 
 // P/PID control Tracking
-void tracking(int l1,int l2,int l3,int r3,int r2,int r1){
+void tracking(int l3,int l2,int l1,int r1,int r2,int r3){
   //TODO: complete your P/PID tracking code
+  error = 0.05*l3+0.03*l2+0.01*l1-0.01*r1-0.03*r2-0.05*r3;
+  MotorWriting(100-error,100+error); 
 }// tracking
