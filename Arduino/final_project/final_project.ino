@@ -94,6 +94,7 @@ void Sensor(){
   r2 = analogRead(R2);
   r3 = analogRead(R3);
   if(ask_BT()==5){flag=1;}
+  if(ask_BT()==4){flag=0;}  
   
   if(flag==1){
     if(l3+l2+l1+r1+r2+r3>4200){
@@ -106,7 +107,6 @@ void Sensor(){
         //讀卡片rfid
         U_turn();
       }
-      if(ask_BT()==4){quick_stop();}  
     }
     else{
       tracking(l3,l2,l1,r1,r2,r3);

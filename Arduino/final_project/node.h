@@ -47,12 +47,3 @@ void U_turn(){
   analogWrite(ENB,100);
   delay(1000);
 }
-void stop_awhile(){
-  analogWrite(ENA,0);
-  analogWrite(ENB,0);
-  delay(100);
-}
-void quick_stop(){
-  analogWrite(ENA,0);
-  analogWrite(ENB,0);
-  }
