@@ -25,7 +25,9 @@ def main():
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
-        maze.strategy()
+        maze.setNode()
+        maze.getStartPoint()
+
         #印出執行過程
         interf.tell_you
 
@@ -41,7 +43,10 @@ def main():
         action = 1
         while(action):
             action = input("What should I do: ")
-            if action == mz.Action:
+            legal = False
+            for i in range(6):
+                legal = legal or (action == str(i))
+            if legal:
                 reception = interf.send_action(action)
                 print("I have already received: {}".format(reception))
             else:
