@@ -18,37 +18,32 @@ int extern _Tp;
 // here are something you can try: left_turn, right_turn... etc.
 
 void right_turn(){
-  digitalWrite(IN1,HIGH);
-  digitalWrite(IN2,LOW);
-  digitalWrite(IN3,HIGH);
-  digitalWrite(IN4,LOW);
+  digitalWrite(MotorL_I1,HIGH);
+  digitalWrite(MotorL_I2,LOW);
+  digitalWrite(MotorR_I3,HIGH);
+  digitalWrite(MotorR_I4,LOW);
   //參數未調整
   analogWrite(ENA,100);
   analogWrite(ENB,100);
-  delay(500);
+  delay(600);
 }
 void left_turn(){
-  digitalWrite(IN1,LOW);
-  digitalWrite(IN2,HIGH);
-  digitalWrite(IN3,LOW);
-  digitalWrite(IN4,HIGH);
+  digitalWrite(MotorL_I1,LOW);
+  digitalWrite(MotorL_I2,HIGH);
+  digitalWrite(MotorR_I3,LOW);
+  digitalWrite(MotorR_I4,HIGH);
   //參數未調整
   analogWrite(ENA,100);
   analogWrite(ENB,100);
   delay(500);
 }
 void U_turn(){
-  digitalWrite(IN1,HIGH);
-  digitalWrite(IN2,LOW);
-  digitalWrite(IN3,HIGH);
-  digitalWrite(IN4,LOW);
+  digitalWrite(MotorL_I1,HIGH);
+  digitalWrite(MotorL_I2,LOW);
+  digitalWrite(MotorR_I3,HIGH);
+  digitalWrite(MotorR_I4,LOW);
   //參數未調整
   analogWrite(ENA,100);
   analogWrite(ENB,100);
   delay(1000);
-}
-void stop_awhile(){
-  analogWrite(ENA,0);
-  analogWrite(ENB,0);
-  delay(100);
 }

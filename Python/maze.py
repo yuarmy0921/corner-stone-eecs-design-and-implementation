@@ -15,7 +15,6 @@ class Action(IntEnum):
 
 class Maze:
     def __init__(self, filepath):
-        # TODO : read file and implement a data structure you like
         self.raw_data = pandas.read_csv(filepath).values
         self.nodes = []
         self.numbers = len(self.raw_data)
@@ -131,7 +130,25 @@ class Maze:
     def getAction(self, car_dir, nd_from, nd_to):
         # TODO : get the car action
         # Tips : return an action and the next direction of the car
-        return None
+        """ restriction: nd_from and nd_to must be adjacent.
+            input: car_dir(class Direction), nd_from(int), nd_to(int)
+            output: tuple(Action.Halt, Direction.car_dir)  if invalid
+                    tuple(Action.action, Direction.next_dir).  """
+        if nd_to not in self.nd_dict[nd_from]:
+            return (Action(5), Direction(car_dir))
+        advance = {(1,1), (2,2), (3,3), (4,4)}
+        u_turn = {(1,2), (2,1), (3,4), (4,3)}
+        r_turn = {(1,4), (4,2), (2,3), (3,1)}
+        l_turn = {(1,3), (3,2), (2,4), (4,1)}
+        target = (car_dir, int(self.nodes[nd_from-1].getDirection(nd_to)))
+        if target in advance:
+            return (Action(1), self.nodes[nd_from-1].getDirection(nd_to))
+        elif target in u_turn:
+            return (Action(2), self.nodes[nd_from-1].getDirection(nd_to))
+        elif target in r_turn:
+            return (Action(3), self.nodes[nd_from-1].getDirection(nd_to))
+        else:
+            return (Action(4), self.nodes[nd_from-1].getDirection(nd_to))
 
     def strategy(self, nd):
         return self.Dijk(nd)
@@ -139,9 +156,18 @@ class Maze:
     def strategy_2(self, nd_from, nd_to):
         return self.Dijk_2(nd_from, nd_to)
 
-if __name__ == '__main__':
+
+def test():
     maze = Maze("data\medium_maze.csv")
     maze.setNode()
     for i in range(1, maze.numbers+1):
         maze.Dijk(i)
     maze.Dijk_2(6,10)
+    print(maze.getAction(1,3,2)) # (2,2)
+    print(maze.getAction(2,3,2)) # (1,2)
+    print(maze.getAction(3,3,2)) # (4,2)
+    print(maze.getAction(4,3,2)) # (3,2)
+    print(maze.getAction(1,3,9)) # (5,1)
+
+if __name__ == '__main__':
+    test()
