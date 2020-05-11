@@ -105,6 +105,11 @@ void Sensor(){
       if(ask_BT()==2){delay(300);left_turn();}//讓車子剛好走到底，未調整
       if(ask_BT()==3){
         //讀卡片rfid
+        byte* id;
+        byte idSize = 0;
+        id = rfid(idSize);
+        send_byte(id,idSize);
+        //需考慮rfid開頭跟n一樣時的可能性
         U_turn();
       }
     }
@@ -135,7 +140,7 @@ BT_CMD _cmd = NOTHING;
 
 void loop()
 {
-   Sensor();
+  Sensor();
    /*
    // search graph
    if(_state == SEARCH_STATE) Search_Mode();
