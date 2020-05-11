@@ -1,14 +1,23 @@
 from time import sleep
 import serial
+import connect
+import threading
 # these codes are for bluetooth
 # hint: please check the function "sleep". how does it work?
 
 #執行的任務：連接電腦端口
 class bluetooth:
-    def __init__(self):
-        self.ser = serial.Serial()
+    def __init__(self, port: str, baudrate: int=9600):
+        self.ser = serial.Serial(port, baudrate = baudrate)
 
-    def do_connect(self,port):
+    def is_open(self) -> bool:
+        return self.ser.is_open
+
+    def waiting(self) -> bool:
+        return self.ser.in_waiting
+
+    def do_connect(self, port):
+        #把上一次連到的port關掉
         self.ser.close()
         print("Connecting...")
         try:
@@ -20,7 +29,6 @@ class bluetooth:
             print("")
             return False
         return True
-
 
     def disconnect(self):
         self.ser.close()
