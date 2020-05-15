@@ -43,15 +43,25 @@ def main():
                 interf.send_action(information[0])
                 #等車子送到達的hint
                 while not interf.arrival():
-                    continue
+                    pass
             maze.nodes[solution[-1]-1].unvisited_deadend = False
             car_dir = information[1]
-            point.add_UID(interf.get_UID())
+            UID = interf.get_UID()
+            if UID:
+                point.add_UID(UID)
             interf.tell_you("Current score: {}".format(point.getCurrentScore()))
-            solution = maze.strategy(solution[-1])
+            check = 0
             for i in range(len(maze.nodes)-1):
-                complete = not (maze.nodes[i] or maze.nodes[i+1])
+                if maze.nodes[i] == False:
+                    check += 1
+            if check == len(maze.nodes):
+                complete = True
+            else:
+                complete = False
+                solution = maze.strategy(solution[-1])
+            
         interf.tell_you("Mission completed!")
+        interf.tell_you("Total score: {}".format(point.getCurrentScore()))
         input("Press enter to close.")
         
 

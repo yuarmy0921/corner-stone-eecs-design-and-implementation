@@ -138,20 +138,20 @@ class Maze:
             output: tuple(Action.Halt, Direction.car_dir)  if invalid
                     tuple(Action.action, Direction.next_dir).  """
         if nd_to not in self.nd_dict[nd_from]:
-            return (Action(5), Direction(car_dir))
+            return ("5", Direction(car_dir))
         advance = {(1,1), (2,2), (3,3), (4,4)}
         u_turn = {(1,2), (2,1), (3,4), (4,3)}
         r_turn = {(1,4), (4,2), (2,3), (3,1)}
         l_turn = {(1,3), (3,2), (2,4), (4,1)}
         target = (car_dir, int(self.nodes[nd_from-1].getDirection(nd_to)))
         if target in advance:
-            return (Action(1), self.nodes[nd_from-1].getDirection(nd_to))
+            return ("1", self.nodes[nd_from-1].getDirection(nd_to))
         elif target in u_turn:
-            return (Action(2), self.nodes[nd_from-1].getDirection(nd_to))
+            return ("2", self.nodes[nd_from-1].getDirection(nd_to))
         elif target in r_turn:
-            return (Action(3), self.nodes[nd_from-1].getDirection(nd_to))
+            return ("3", self.nodes[nd_from-1].getDirection(nd_to))
         else:
-            return (Action(4), self.nodes[nd_from-1].getDirection(nd_to))
+            return ("4", self.nodes[nd_from-1].getDirection(nd_to))
 
     def strategy(self, nd):
         return self.Dijk(nd)
