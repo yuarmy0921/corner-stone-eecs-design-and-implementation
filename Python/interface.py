@@ -29,6 +29,9 @@ class interface:
         # TODO : send the action to car
         self.ser.SerialWrite(dirc)
         return self.ser.SerialReadString()   #確認有接收到指令
+        
+    def arrival(self) -> bool:
+        return self.ser.SerialReadString
 
     def end_process(self):
         self.ser.SerialWrite('e')
