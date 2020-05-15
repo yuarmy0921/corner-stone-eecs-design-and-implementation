@@ -18,12 +18,13 @@ class Maze:
         self.raw_data = pandas.read_csv(filepath).values
         self.nodes = []
         self.numbers = len(self.raw_data)
+        #每一個value都是一個list
         self.nd_dict = dict()  # key: index, value: the correspond node
 
     def setNode(self):
         """ Construct node classes of the maze. (index, successors, deadend)
             print every successor while setting, print nd_dict."""
-        for i in range(len(self.raw_data)):
+        for i in range(len(self.raw_data)):   #總節點數
             index = int(self.raw_data[i][0])
             self.nodes.append(Node(index))
             ad_list = []
@@ -99,6 +100,8 @@ class Maze:
             output: (list) list of nodes index(int) showing the shotest path. """
         # TODO : similar to Dijk but fixed start point and end point
         # Tips : return a sequence of nodes of the shortest path
+
+        #?????????
         distance = [99]*self.numbers  # set inf = 99
         distance[nd_from-1] = 0 # distance of nodes from nd_from
         completed = [] # visited nodes
@@ -160,14 +163,15 @@ class Maze:
 def test():
     maze = Maze("data\medium_maze.csv")
     maze.setNode()
-    for i in range(1, maze.numbers+1):
-        maze.Dijk(i)
-    maze.Dijk_2(6,10)
-    print(maze.getAction(1,3,2)) # (2,2)
-    print(maze.getAction(2,3,2)) # (1,2)
-    print(maze.getAction(3,3,2)) # (4,2)
-    print(maze.getAction(4,3,2)) # (3,2)
-    print(maze.getAction(1,3,9)) # (5,1)
+    print(maze.strategy(1))
+    #for i in range(1, maze.numbers+1):
+        #print(maze.Dijk(i))
+    #maze.Dijk_2(6,10)
+    #print(maze.getAction(1,3,2)) # (2,2)
+    #print(maze.getAction(2,3,2)) # (1,2)
+    #print(maze.getAction(3,3,2)) # (4,2)
+    #print(maze.getAction(4,3,2)) # (3,2)
+    #print(maze.getAction(1,3,9)) # (5,1)
 
 if __name__ == '__main__':
     test()

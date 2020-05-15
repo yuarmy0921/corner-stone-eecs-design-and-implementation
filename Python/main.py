@@ -20,16 +20,19 @@ def main():
     #在這裡會先要求輸入port，如果輸入quit則斷線
     interf = interface.interface()   
     # TODO : Initialize necessary variables
-
+    maze.setNode()
     #執行BFS，
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
-        maze.setNode()
-        maze.getStartPoint()
-
-        #印出執行過程
-        interf.tell_you
+        start = int(input("Where to start: "))
+        #找到完整路徑(最近)
+        solution = maze.strategy(start)
+        interf.tell_you("Shortest path: {}".format(solution))
+        #傳送指令給車，等到達下一個節點再傳送指令
+        for i in len(solution)-1:
+            maze.getAction()
+        
 
     elif (sys.argv[1] == '1'):
         print("Mode 1: for treasure-hunting with rule 2")
@@ -49,6 +52,10 @@ def main():
             if legal:
                 reception = interf.send_action(action)
                 print("I have already received: {}".format(reception))
+            elif action == "exit":
+                interf.end_process()
+                print("Bye bye ~~~")
+                break
             else:
                 print("You have send a wrong instruction. Please try again.")
 

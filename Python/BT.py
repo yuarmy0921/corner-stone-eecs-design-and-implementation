@@ -33,7 +33,7 @@ class bluetooth:
     def disconnect(self):
         self.ser.close()
 
-    def SerialWrite(self,output):
+    def SerialWrite(self,output):      #接收指令的部分
         # send = 's'.encode("utf-8")
         #把接收到的字元指令解碼再寫進藍芽
         send = output.encode("utf-8")
@@ -42,8 +42,9 @@ class bluetooth:
     def SerialReadString(self):
         # TODO: Get the information from Bluetooth. Notice that the return type should be transformed into hex.
         waiting = self.ser.in_waiting      #返回接收快取中的位元組數
+        print(waiting)
         if waiting >= 0:
-            rv = self.ser.read(1).decode("utf-8") #從串列中讀取一個位元組，再轉成英文字
+            rv = self.ser.read(waiting).decode("utf-8")[:-1] #從串列中讀取位元組，再轉成英文字
             return rv
         return ""
 
