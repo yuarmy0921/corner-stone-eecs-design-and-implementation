@@ -21,13 +21,11 @@ def main():
     interf = interface.interface()   
     # TODO : Initialize necessary variables
     maze.setNode()
-    #執行BFS，
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
         start = int(input("Where to start: "))
         car_dir = 2
-        #注意要先確認地圖的方位是怎麼定的!!!
         #找到完整路徑(最近)
         solution = maze.strategy(start)
         interf.tell_you("Shortest path: {}".format(solution))
@@ -57,7 +55,6 @@ def main():
             if check == len(maze.nodes):
                 complete = True
             else:
-                complete = False
                 solution = maze.strategy(solution[-1])
             
         interf.tell_you("Mission completed!")
