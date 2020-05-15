@@ -1,14 +1,23 @@
 from time import sleep
 import serial
+import connect
+import threading
 # these codes are for bluetooth
 # hint: please check the function "sleep". how does it work?
 
 #執行的任務：連接電腦端口
 class bluetooth:
-    def __init__(self):
-        self.ser = serial.Serial()
+    def __init__(self, port: str, baudrate: int=9600):
+        self.ser = serial.Serial(port, baudrate = baudrate)
 
-    def do_connect(self,port):
+    def is_open(self) -> bool:
+        return self.ser.is_open
+
+    def waiting(self) -> bool:
+        return self.ser.in_waiting
+
+    def do_connect(self, port):
+        #把上一次連到的port關掉
         self.ser.close()
         print("Connecting...")
         try:
@@ -21,11 +30,10 @@ class bluetooth:
             return False
         return True
 
-
     def disconnect(self):
         self.ser.close()
 
-    def SerialWrite(self,output):
+    def SerialWrite(self,output):      #接收指令的部分
         # send = 's'.encode("utf-8")
         #把接收到的字元指令解碼再寫進藍芽
         send = output.encode("utf-8")
@@ -34,8 +42,9 @@ class bluetooth:
     def SerialReadString(self):
         # TODO: Get the information from Bluetooth. Notice that the return type should be transformed into hex.
         waiting = self.ser.in_waiting      #返回接收快取中的位元組數
+        print(waiting)
         if waiting >= 0:
-            rv = self.ser.read(1).decode("utf-8") #從串列中讀取一個位元組，再轉成英文字
+            rv = self.ser.read(waiting).decode("utf-8")[:-1] #從串列中讀取位元組，再轉成英文字
             return rv
         return ""
 
