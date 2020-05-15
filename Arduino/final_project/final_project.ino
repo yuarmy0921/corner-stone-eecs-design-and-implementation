@@ -86,6 +86,7 @@ void setup()
 int l3, l2, l1, r1, r2, r3;
 double error;
 int flag=0;
+int delayfornodes=0;
 void Sensor(){
   l3 = analogRead(L3);
   l2 = analogRead(L2);
@@ -97,12 +98,12 @@ void Sensor(){
   if(ask_BT()==4){flag=0;}  
   
   if(flag==1){
-    if(l3+l2+l1+r1+r2+r3>4200){
+    if(l3+l2+l1+r1+r2+r3>4200&&delayfornodes==0){
       char n;
       send_msg(n);
-      if(ask_BT()==0){delay(300);}//讓車子剛好走到底，未調整
-      if(ask_BT()==1){delay(300);right_turn();}//讓車子剛好走到底，未調整
-      if(ask_BT()==2){delay(300);left_turn();}//讓車子剛好走到底，未調整
+      if(ask_BT()==0){delay(300);delayfornodes=1;}//讓車子剛好走到底，未調整
+      if(ask_BT()==1){delay(300);right_turn();delayfornodes=1;}//讓車子剛好走到底，未調整
+      if(ask_BT()==2){delay(300);left_turn();delayfornodes=1;}//讓車子剛好走到底，未調整
       if(ask_BT()==3){
         //讀卡片rfid
         byte* id;
@@ -111,10 +112,12 @@ void Sensor(){
         send_byte(id,idSize);
         //需考慮rfid開頭跟n一樣時的可能性
         U_turn();
+        delayfornodes=1;
       }
     }
     else{
       tracking(l3,l2,l1,r1,r2,r3);
+      delayfornodes=0;
     }
   
   }
