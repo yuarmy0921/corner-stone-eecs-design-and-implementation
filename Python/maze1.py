@@ -11,19 +11,20 @@ class Action(IntEnum):
     TURN_RIGHT = 3
     TURN_LEFT = 4
     HALT = 5
-
+    END = 0
 
 class Maze:
     def __init__(self, filepath):
         self.raw_data = pandas.read_csv(filepath).values
         self.nodes = []
         self.numbers = len(self.raw_data)
+        #每一個value都是一個list
         self.nd_dict = dict()  # key: index, value: the correspond node
 
     def setNode(self):
         """ Construct node classes of the maze. (index, successors, deadend)
             print every successor while setting, print nd_dict."""
-        for i in range(len(self.raw_data)):
+        for i in range(len(self.raw_data)):   #總節點數
             index = int(self.raw_data[i][0])
             self.nodes.append(Node(index))
             ad_list = []
@@ -77,16 +78,13 @@ class Maze:
                     pre[ad[0]-1] = nearest+1
             completed.append(nearest+1) 
 
-        
-        if not score:
-            return [nd]
         # find nearest score point
         nearest = score[0]
         for node in score:
             if distance[node-1] < distance[nearest-1]:
                 nearest = node
         print('Nearest: Node', nearest)
-    
+        
         # print route to the nearest score point
         route = [nearest]
         pre_node = pre[nearest-1]
@@ -102,6 +100,8 @@ class Maze:
             output: (list) list of nodes index(int) showing the shotest path. """
         # TODO : similar to Dijk but fixed start point and end point
         # Tips : return a sequence of nodes of the shortest path
+
+        #?????????
         distance = [99]*self.numbers  # set inf = 99
         distance[nd_from-1] = 0 # distance of nodes from nd_from
         completed = [] # visited nodes
@@ -138,20 +138,20 @@ class Maze:
             output: tuple(Action.Halt, Direction.car_dir)  if invalid
                     tuple(Action.action, Direction.next_dir).  """
         if nd_to not in self.nd_dict[nd_from]:
-            return (5, Direction(car_dir))
+            return ("5", Direction(car_dir))
         advance = {(1,1), (2,2), (3,3), (4,4)}
         u_turn = {(1,2), (2,1), (3,4), (4,3)}
         r_turn = {(1,4), (4,2), (2,3), (3,1)}
         l_turn = {(1,3), (3,2), (2,4), (4,1)}
         target = (car_dir, int(self.nodes[nd_from-1].getDirection(nd_to)))
         if target in advance:
-            return (Action(1), self.nodes[nd_from-1].getDirection(nd_to))
+            return ("1", self.nodes[nd_from-1].getDirection(nd_to))
         elif target in u_turn:
-            return (Action(2), self.nodes[nd_from-1].getDirection(nd_to))
+            return ("2", self.nodes[nd_from-1].getDirection(nd_to))
         elif target in r_turn:
-            return (Action(3), self.nodes[nd_from-1].getDirection(nd_to))
+            return ("3", self.nodes[nd_from-1].getDirection(nd_to))
         else:
-            return (Action(4), self.nodes[nd_from-1].getDirection(nd_to))
+            return ("4", self.nodes[nd_from-1].getDirection(nd_to))
 
     def strategy(self, nd):
         return self.Dijk(nd)
@@ -159,10 +159,19 @@ class Maze:
     def strategy_2(self, nd_from, nd_to):
         return self.Dijk_2(nd_from, nd_to)
 
+
 def test():
     maze = Maze("data\medium_maze.csv")
     maze.setNode()
-    for i in range(1, maze.numbers+1):
-        maze.Dijk(i)
+    print(maze.strategy(1))
+    #for i in range(1, maze.numbers+1):
+        #print(maze.Dijk(i))
+    #maze.Dijk_2(6,10)
+    #print(maze.getAction(1,3,2)) # (2,2)
+    #print(maze.getAction(2,3,2)) # (1,2)
+    #print(maze.getAction(3,3,2)) # (4,2)
+    #print(maze.getAction(4,3,2)) # (3,2)
+    #print(maze.getAction(1,3,9)) # (5,1)
+
 if __name__ == '__main__':
     test()
