@@ -26,15 +26,18 @@ def main():
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
         start = int(input("Where to start: "))
+        car_dir = 2
         #注意要先確認地圖的方位是怎麼定的!!!
         #找到完整路徑(最近)
         solution = maze.strategy(start)
         interf.tell_you("Shortest path: {}".format(solution))
         #傳送指令給車，等到達下一個節點再傳送指令
         complete = False
+        interf.send_action(input("Press s to start: "))
+
         while not complete:
             #一條路徑跑完
-            for i in len(solution)-1:
+            for i in range(len(solution)-1):
                 information = maze.getAction(car_dir, solution[i], solution[i+1])
                 interf.tell_you(information)
                 interf.send_action(information[0])
@@ -42,10 +45,11 @@ def main():
                 while not interf.arrival():
                     continue
             maze.nodes[solution[-1]-1].unvisited_deadend = False
+            car_dir = information[1]
             point.add_UID(interf.get_UID())
             interf.tell_you("Current score: {}".format(point.getCurrentScore()))
             solution = maze.strategy(solution[-1])
-            for i in len(maze.nodes)-1:
+            for i in range(len(maze.nodes)-1):
                 complete = not (maze.nodes[i] or maze.nodes[i+1])
         interf.tell_you("Mission completed!")
         input("Press enter to close.")
