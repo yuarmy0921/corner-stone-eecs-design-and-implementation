@@ -56,7 +56,4 @@ class bluetooth:
             UID = hex(int.from_bytes(rv, byteorder='big', signed=False))   #從最高位照順序存下來
             self.ser.flushInput()    #清除快取
             return UID
-        else:
-            return 0
-
-
+        return 0
