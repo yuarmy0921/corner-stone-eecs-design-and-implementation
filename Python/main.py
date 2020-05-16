@@ -37,10 +37,14 @@ def main():
 
         while not complete:
             #一條路徑跑完
+            print("Hi")
             for i in range(len(solution)-1):
                 information = maze.getAction(car_dir, solution[i], solution[i+1])
+                print(information)
                 interf.tell_you(information)
                 interf.send_action(information[0])
+                time.sleep(500)
+                interf.tell_you("I have already received: {}".format(interf.get_status()))
                 #等車子送到達的hint
                 while not interf.arrival():
                     pass
@@ -80,8 +84,9 @@ def main():
             legal = False
             for i in range(6):
                 legal = legal or (action == str(i))
-            if legal:
-                reception = interf.send_action(action)
+            if legal or action == "s":
+                interf.send_action(str(action))
+                reception = interf.get_status()
                 print("I have already received: {}".format(reception))
             elif action == "exit":
                 interf.end_process()
