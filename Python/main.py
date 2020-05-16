@@ -65,7 +65,34 @@ def main():
     elif (sys.argv[1] == '1'):
         print("Mode 1: for treasure-hunting with rule 2")
         # TODO : for treasure-hunting with rule 2, which requires you to hunt as many specified treasures as possible
-        maze.strategy_2()
+        route = list(map(int,input("Enter route(separate with space): ").strip().split()))
+        car_dir = 2
+        #傳送開始指令給車
+        interf.send_action(input("Press s to start: "))
+        cp = 1 # current point's order
+        while cp < len(route):
+            #找到路徑
+            solution = maze.strategy_2(route[cp-1], route[cp])
+            interf.tell_you("Shortest path: {}".format(solution))
+            #一條路徑跑完
+            for i in range(len(solution)-1):
+                information = maze.getAction(car_dir, solution[i], solution[i+1])
+                interf.tell_you(information)
+                interf.send_action(information[0])
+                #等車子送到達的hint
+                while not interf.arrival():
+                    pass
+            car_dir = information[1]
+            UID = interf.get_UID()
+            if UID:
+                point.add_UID(UID)
+            interf.tell_you("Current score: {}".format(point.getCurrentScore()))
+            cp += 1
+        # completed !
+        interf.tell_you("Mission completed!")
+        interf.tell_you("Total score: {}".format(point.getCurrentScore()))
+        input("Press enter to close.")
+        
 
     #自我測試：執行main之後，在interface(terminal)傳送指令，儲存到藍芽
     elif (sys.argv[1] == '2'):

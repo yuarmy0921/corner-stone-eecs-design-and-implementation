@@ -38,6 +38,7 @@ class Maze:
             self.nd_dict[int(self.raw_data[i][0])] = ad_list
             if len(ad_list) == 1:
                 self.nodes[i].unvisited_deadend = True
+            self.nodes[0].unvisited_deadend = False
         print(self.nd_dict)
 
     def getStartPoint(self):
