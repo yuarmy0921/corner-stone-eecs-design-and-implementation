@@ -79,6 +79,9 @@ class Maze:
             completed.append(nearest+1) 
 
         # find nearest score point
+        print(score)
+        if not score:
+            return 'haha'
         nearest = score[0]
         for node in score:
             if distance[node-1] < distance[nearest-1]:
@@ -160,7 +163,7 @@ class Maze:
         return self.Dijk_2(nd_from, nd_to)
 
 def test():
-    maze = Maze("data\small_maze.csv")
+    maze = Maze("data\medium_maze.csv")
     maze.setNode()
     for i in range(1, maze.numbers+1):
         maze.Dijk(i)
