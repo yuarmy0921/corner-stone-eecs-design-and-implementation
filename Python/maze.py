@@ -85,10 +85,10 @@ class Maze:
         print('Nearest: Node', nearest)
     
         # print route to the nearest score point
-        route = [nearest]
+        route = [nd, nearest]
         pre_node = pre[nearest-1]
         while pre_node != nd:
-            route.insert(0, pre_node)
+            route.insert(1, pre_node)
             pre_node = pre[pre_node-1]
         print('Route:', route, '\n')
         return route
@@ -120,10 +120,10 @@ class Maze:
             completed.append(nearest+1) 
         
         # print route to nd_to
-        route = [nd_to]
+        route = [nd_from , nd_to]
         pre_node = pre[nd_to-1]
         while pre_node != nd_from:
-            route.insert(0, pre_node)
+            route.insert(1, pre_node)
             pre_node = pre[pre_node-1]
         print('From %d to %d, Route:'%(nd_from, nd_to), route)
         return route
