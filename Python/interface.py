@@ -33,7 +33,7 @@ class interface:
         #return self.ser.SerialReadString()   #確認有接收到指令
 
     def arrival(self) -> bool:
-        return self.ser.SerialReadString
+        return self.ser.SerialReadString == "n"
 
     def end_process(self):
         self.ser.SerialWrite('e')

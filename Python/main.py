@@ -21,6 +21,9 @@ def main():
     interf = interface.interface()   
     # TODO : Initialize necessary variables
     maze.setNode()
+    interf.send_action(input("Press s to activate: "))
+    #清除快取
+    interf.ser.ser.flushInput()
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
@@ -31,14 +34,16 @@ def main():
         interf.tell_you("Shortest path: {}".format(solution))
         #傳送指令給車，等到達下一個節點再傳送指令
         complete = False
-        interf.send_action(input("Press s to start: "))
-
+        
         while not complete:
+            #先檢查藍芽
+            if not interf.ser.is_open():
+                interf.tell_you("Disconncted!")
+                interf = interface.interface()
             #一條路徑跑完
             print("Hi")
             for i in range(len(solution)-1):
                 information = maze.getAction(car_dir, solution[i], solution[i+1])
-                print(information)
                 interf.tell_you(information)
                 interf.send_action(information[0])
                 time.sleep(500)
@@ -54,11 +59,12 @@ def main():
             interf.tell_you("Current score: {}".format(point.getCurrentScore()))
             check = 0
             for i in range(len(maze.nodes)-1):
-                if maze.nodes[i] == False:
+                if maze.nodes[i].unvisited_deadend == False:
                     check += 1
             if check == len(maze.nodes):
                 complete = True
             else:
+                complete = False
                 solution = maze.strategy(solution[-1])
             
         interf.tell_you("Mission completed!")
