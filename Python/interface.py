@@ -29,12 +29,13 @@ class interface:
 
     def send_action(self,dirc):
         # TODO : send the action to car
-        print("pre")
+        #print("start send action.")
         self.ser.SerialWrite(dirc)
+        #print("action sent.")
         #return self.ser.SerialReadString()   #確認有接收到指令
 
-    def arrival(self) -> bool:
-        return self.ser.SerialReadString == "k"
+    def arrival(self):
+        return self.ser.SerialReadString() == "k"
 
     def end_process(self):
         self.ser.SerialWrite('e')

@@ -36,10 +36,11 @@ class bluetooth:
     def SerialWrite(self,output):      #接收指令的部分
         # send = 's'.encode("utf-8")
         #把接收到的字元指令解碼再寫進藍芽
-        print("No")
+        print("start serial write.")
         send = output.encode("utf-8")
         print(send)
         self.ser.write(send)
+        print("complete serial write.")
 
     def SerialReadString(self):
         # TODO: Get the information from Bluetooth. Notice that the return type should be transformed into hex.
