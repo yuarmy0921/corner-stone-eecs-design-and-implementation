@@ -52,6 +52,26 @@ void MotorWriting(double vL, double vR) {
 // P/PID control Tracking
 void tracking(int l3,int l2,int l1,int r1,int r2,int r3){
   //TODO: complete your P/PID tracking code
-  error = 0.05*l3+0.03*l2+0.01*l1-0.01*r1-0.03*r2-0.05*r3;
-  MotorWriting(100-error,100+error); 
+  /*int n1,n2,n3,n4,n5;
+  n1=l3+l2;
+  n2=l2+l1;
+  n3=l1+r1;
+  n4=r1+r2;
+  n5=r2+r3;
+  if(n1>1900){}
+  //error = 0.03*l3+0.018*l2+0.006*l1-0.006*r1-0.018*r2-0.03*r3;
+  error=0.01*n1+0.03*n2-0.03*n4-0.01*n5;
+  Serial.println(error);
+  MotorWriting(64-0.5*error,64+0.5*error);*/
+   Serial.println(l3);
+    Serial.println(l2);
+     Serial.println(l1);
+      Serial.println(r1);
+       Serial.println(r2);
+        Serial.println(r3);
+         
+  error = 3.0*l3+1.7*l2+1.0*l1-1.0*r1-1.7*r2-3.0*r3;
+  error = error/11.4;
+  MotorWriting(64*(1-2*error),64*(1+2*error));
+  Serial.println(error);
 }// tracking

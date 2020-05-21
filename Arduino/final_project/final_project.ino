@@ -94,11 +94,14 @@ void Sensor(){
   r1 = analogRead(R1);
   r2 = analogRead(R2);
   r3 = analogRead(R3);
-  if(ask_BT()==5){flag=1;}
-  if(ask_BT()==4){flag=0;}  
+  if(ask_BT()==5){flag=1;Serial.println("Now i can move");  Serial.println("full version");}
+  
+  if(ask_BT()==4){flag=0;Serial.println("Stop!!!!");}  
+
   
   if(flag==1){
     if(l3+l2+l1+r1+r2+r3>4200&&delayfornodes==0){
+      Serial.println("i find a node!");
       char n;
       send_msg(n);
       if(ask_BT()==0){delay(300);delayfornodes=1;}//讓車子剛好走到底，未調整
@@ -114,6 +117,7 @@ void Sensor(){
         U_turn();
         delayfornodes=1;
       }
+      else{Serial.println("wheres my instruct");}
     }
     else{
       tracking(l3,l2,l1,r1,r2,r3);
@@ -142,8 +146,15 @@ ControlState _state=HAULT_STATE;
 BT_CMD _cmd = NOTHING;
 
 void loop()
-{
-  Sensor();
+{ l3 = digitalRead (L3);
+  l2 = digitalRead(L2);
+  l1 = digitalRead(L1);
+  r1 = digitalRead(R1);
+  r2 = digitalRead(R2);
+  r3 = digitalRead(R3);
+  tracking(l3,l2,l1,r1,r2,r3);
+  //Sensor();
+ 
    /*
    // search graph
    if(_state == SEARCH_STATE) Search_Mode();
