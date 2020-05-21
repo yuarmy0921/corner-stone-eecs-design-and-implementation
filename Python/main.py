@@ -23,14 +23,15 @@ def main():
     maze.setNode()
     interf.send_action(input("Press s to activate: "))
     #清除快取
+    print("Hi")
     interf.ser.ser.flushInput()
+    print("HI")
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
-        start = int(input("Where to start: "))
         car_dir = 2
         #找到完整路徑(最近)
-        solution = maze.strategy(start)
+        solution = maze.strategy(1)
         interf.tell_you("Shortest path: {}".format(solution))
         #傳送指令給車，等到達下一個節點再傳送指令
         complete = False
@@ -41,9 +42,10 @@ def main():
                 interf.tell_you("Disconncted!")
                 interf = interface.interface()
             #一條路徑跑完
-            print("Hi")
+            #print("Hi")
             for i in range(len(solution)-1):
                 information = maze.getAction(car_dir, solution[i], solution[i+1])
+                interf.tell_you("Information: ")
                 interf.tell_you(information)
                 interf.send_action(information[0])
                 time.sleep(500)
@@ -51,6 +53,7 @@ def main():
                 #等車子送到達的hint
                 while not interf.arrival():
                     pass
+            interf.tell_you("Received!")
             maze.nodes[solution[-1]-1].unvisited_deadend = False
             car_dir = information[1]
             UID = interf.get_UID()
