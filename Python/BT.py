@@ -42,9 +42,8 @@ class bluetooth:
     def SerialReadString(self):
         # TODO: Get the information from Bluetooth. Notice that the return type should be transformed into hex.
         waiting = self.ser.in_waiting      #返回接收快取中的位元組數
-        print(waiting)
         if waiting >= 0:
-            rv = self.ser.read(waiting).decode("utf-8")[:-1] #從串列中讀取位元組，再轉成英文字
+            rv = self.ser.read(waiting).decode("utf-8") #從串列中讀取位元組，再轉成英文字
             return rv
         return ""
 
@@ -56,7 +55,4 @@ class bluetooth:
             UID = hex(int.from_bytes(rv, byteorder='big', signed=False))   #從最高位照順序存下來
             self.ser.flushInput()    #清除快取
             return UID
-        else:
-            return 0
-
-
+        return 0

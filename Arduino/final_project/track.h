@@ -16,6 +16,10 @@
 /*===========================import variable===========================*/
 int extern _Tp;
 double extern error;
+float extern Ki, Kd, Kp;
+Ki=0.05; Kd=0.01; Kp=0.05;
+float extern error_, SumError, LastError;
+SumError=0; LastError=0;
 /*===========================import variable===========================*/
 
 // Write the voltage to motor.
@@ -75,3 +79,18 @@ void tracking(int l3,int l2,int l1,int r1,int r2,int r3){
   MotorWriting(64*(1-2*error),64*(1+2*error));
   Serial.println(error);
 }// tracking
+
+//test
+void PID_control(int l3,int l2,int l1,int r1,int r2,int r3){
+  //當越外側讀到的值越大，error越大
+  //設定right為正，left為負
+  //採樣週期
+  //穩態誤差：響應時間、與期望值的差
+  //積分時間：減小誤差
+  //微分時間：加快響應速度，偵測誤差變化趨勢
+  error_ = -0.05*l3 - 0.03*l2 - 0.01*l1 + 0.01*r1 + 0.03*r2 + 0.05*r3;  //有待測試
+  SumError += error_;
+  error_ = Kp*error + Ki*SumError + Kd*(error - LastError);
+  MotorWriting(100+error, 100-error);   //輸入：左 右
+  
+}

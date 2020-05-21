@@ -13,6 +13,7 @@ class Action(IntEnum):
     HALT = 5
     END = 0
 
+
 class Maze:
     def __init__(self, filepath):
         self.raw_data = pandas.read_csv(filepath).values
@@ -37,6 +38,7 @@ class Maze:
             self.nd_dict[int(self.raw_data[i][0])] = ad_list
             if len(ad_list) == 1:
                 self.nodes[i].unvisited_deadend = True
+            self.nodes[0].unvisited_deadend = False
         print(self.nd_dict)
 
     def getStartPoint(self):
@@ -52,9 +54,7 @@ class Maze:
     def Dijk(self, nd):
         """ for game mode 1.
             input: (int) index of node being starting point.
-            output: (list) list of nodes index(int) showing the path to the nearest deadend. """
-        # TODO : design your data structure here for your algorithm
-        # Tips : return a sequence of nodes from the node to the nearest unexplored deadend
+            output: (list) list of nodes index(int) showing the path to the nearest unvisited_deadend. """
         print('Node', nd)
         distance = [99]*self.numbers  # set inf = 99
         distance[nd-1] = 0 # distance of nodes from nd
@@ -79,17 +79,20 @@ class Maze:
             completed.append(nearest+1) 
 
         # find nearest score point
+        print(score)
+        if not score:
+            return 'haha'
         nearest = score[0]
         for node in score:
             if distance[node-1] < distance[nearest-1]:
                 nearest = node
         print('Nearest: Node', nearest)
-        
+    
         # print route to the nearest score point
-        route = [nearest]
+        route = [nd, nearest]
         pre_node = pre[nearest-1]
         while pre_node != nd:
-            route.insert(0, pre_node)
+            route.insert(1, pre_node)
             pre_node = pre[pre_node-1]
         print('Route:', route, '\n')
         return route
@@ -101,7 +104,6 @@ class Maze:
         # TODO : similar to Dijk but fixed start point and end point
         # Tips : return a sequence of nodes of the shortest path
 
-        #?????????
         distance = [99]*self.numbers  # set inf = 99
         distance[nd_from-1] = 0 # distance of nodes from nd_from
         completed = [] # visited nodes
@@ -122,10 +124,10 @@ class Maze:
             completed.append(nearest+1) 
         
         # print route to nd_to
-        route = [nd_to]
+        route = [nd_from , nd_to]
         pre_node = pre[nd_to-1]
         while pre_node != nd_from:
-            route.insert(0, pre_node)
+            route.insert(1, pre_node)
             pre_node = pre[pre_node-1]
         print('From %d to %d, Route:'%(nd_from, nd_to), route)
         return route
@@ -134,11 +136,12 @@ class Maze:
         # TODO : get the car action
         # Tips : return an action and the next direction of the car
         """ restriction: nd_from and nd_to must be adjacent.
-            input: car_dir(class Direction), nd_from(int), nd_to(int)
-            output: tuple(Action.Halt, Direction.car_dir)  if invalid
-                    tuple(Action.action, Direction.next_dir).  """
+            input: car_dir(str), nd_from(int), nd_to(int)
+            output: tuple(Action.Halt, car_dir)  if invalid
+                    tuple(Action.action, next_dir).  """
         if nd_to not in self.nd_dict[nd_from]:
             return ("5", Direction(car_dir))
+
         advance = {(1,1), (2,2), (3,3), (4,4)}
         u_turn = {(1,2), (2,1), (3,4), (4,3)}
         r_turn = {(1,4), (4,2), (2,3), (3,1)}
@@ -159,19 +162,10 @@ class Maze:
     def strategy_2(self, nd_from, nd_to):
         return self.Dijk_2(nd_from, nd_to)
 
-
 def test():
     maze = Maze("data\medium_maze.csv")
     maze.setNode()
-    print(maze.strategy(1))
-    #for i in range(1, maze.numbers+1):
-        #print(maze.Dijk(i))
-    #maze.Dijk_2(6,10)
-    #print(maze.getAction(1,3,2)) # (2,2)
-    #print(maze.getAction(2,3,2)) # (1,2)
-    #print(maze.getAction(3,3,2)) # (4,2)
-    #print(maze.getAction(4,3,2)) # (3,2)
-    #print(maze.getAction(1,3,9)) # (5,1)
-
+    for i in range(1, maze.numbers+1):
+        maze.Dijk(i)
 if __name__ == '__main__':
     test()

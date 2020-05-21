@@ -17,7 +17,6 @@ class interface:
                 quit()
             port = input("PC bluetooth port name: ")
         input("Press enter to start.")
-        self.ser.SerialWrite('s')
         
     def tell_you(self, string):
         print(string)
@@ -25,13 +24,16 @@ class interface:
     def get_UID(self):
         return self.ser.SerialReadByte()
 
+    def get_status(self):
+        return self.ser.SerialReadString()
+
     def send_action(self,dirc):
         # TODO : send the action to car
         self.ser.SerialWrite(dirc)
-        return self.ser.SerialReadString()   #確認有接收到指令
-        
+        #return self.ser.SerialReadString()   #確認有接收到指令
+
     def arrival(self) -> bool:
-        return self.ser.SerialReadString
+        return self.ser.SerialReadString == "n"
 
     def end_process(self):
         self.ser.SerialWrite('e')
