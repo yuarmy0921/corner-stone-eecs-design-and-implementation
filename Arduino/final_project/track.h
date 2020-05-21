@@ -16,10 +16,8 @@
 /*===========================import variable===========================*/
 int extern _Tp;
 double extern error;
-float extern Ki, Kd, Kp;
-Ki=0.05; Kd=0.01; Kp=0.05;
-float extern error_, SumError, LastError;
-SumError=0; LastError=0;
+double Ki=0.04,Kd=0.08,Kp=0.4;
+double error_,SumError=0,LastError=0;
 /*===========================import variable===========================*/
 
 // Write the voltage to motor.
@@ -88,9 +86,21 @@ void PID_control(int l3,int l2,int l1,int r1,int r2,int r3){
   //穩態誤差：響應時間、與期望值的差
   //積分時間：減小誤差
   //微分時間：加快響應速度，偵測誤差變化趨勢
-  error_ = -0.05*l3 - 0.03*l2 - 0.01*l1 + 0.01*r1 + 0.03*r2 + 0.05*r3;  //有待測試
-  SumError += error_;
-  error_ = Kp*error + Ki*SumError + Kd*(error - LastError);
-  MotorWriting(100+error, 100-error);   //輸入：左 右
+  error_ = -0.07*l3 - 0.06*l2 - 0.01*l1 + 0.01*r1 + 0.06*r2 + 0.07*r3;  //有待測試
+ 
+  //SumError += error_;
+  error_ = Kp*error_ + Ki*SumError + Kd*(error_- LastError);
+  LastError = error_;
   
+  //Serial.println(error_);
+         
+  MotorWriting(70-error_, 70+error_);   //輸入：左 右
+  /*Serial.println(" ");
+  Serial.print("error: ");
+  Serial.println(error_);
+  Serial.print("left: ");
+  Serial.println(70-error_);
+  Serial.print("right: ");
+  Serial.println(70+error_);
+  */
 }

@@ -22,19 +22,20 @@ BT_CMD ask_BT(){
       // TODO:
       // 1. get cmd from SoftwareSerial object: BT
       cmd = BT.read();
+      BT.write(cmd);
       // 2. link bluetooth message to your own command type
-      if(cmd =='w'){message=NOTHING;}
-      if(cmd =='d'){message=TURNRIGHT;}
-      if(cmd =='a'){message=TURNLEFT;}
-      if(cmd =='r'){message=READ;}
-      if(cmd =='h'){message=HAULT;}
+      if(cmd =='1'){message=NOTHING;}
+      if(cmd =='3'){message=TURNRIGHT;}
+      if(cmd =='4'){message=TURNLEFT;}
+      if(cmd =='2'){message=READ;}
+      if(cmd =='5'){message=HAULT;}
       if(cmd =='s'){message=START;}
       #ifdef DEBUG
       Serial.print("cmd : ");
       Serial.println(cmd);
       #endif
     }
-    else{Serial.println("i dont have induction!!");}
+    //else{//Serial.println("i dont have induction!!");}
     return message;
 }// ask_BT
 
@@ -43,6 +44,7 @@ BT_CMD ask_BT(){
 // (but need to convert to byte type)
 void send_msg(const char& msg)
 {    BT.write(msg);
+    Serial.println("I snd it !");
      // TODO:
 }// send_msg
 //讓車子到達轉彎點時，回傳到達訊號
