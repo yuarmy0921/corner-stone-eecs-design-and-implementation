@@ -23,9 +23,9 @@ def main():
     maze.setNode()
     interf.send_action(input("Press s to activate: "))
     #清除快取
-    print("Hi")
+    #print("Hi")
     interf.ser.ser.flushInput()
-    print("HI")
+    #print("HI")
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
@@ -48,7 +48,9 @@ def main():
                 interf.tell_you("Information: ")
                 interf.tell_you(information)
                 interf.send_action(information[0])
-                time.sleep(500)
+                #print("waiting")
+                time.sleep(1)
+                #print("slept")
                 interf.tell_you("I have already received: {}".format(interf.get_status()))
                 #等車子送到達的hint
                 while not interf.arrival():
