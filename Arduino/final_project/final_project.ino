@@ -107,23 +107,26 @@ void Sensor(){
       MotorWriting(0,0);
       delay(600);
       
-      if(ask_BT()==0){
+      BT_CMD instruct;
+      instruct = ask_BT();
+      
+      if(instruct==NOTHING){
         delay(300);
         delayfornodes=1;
        }//讓車子剛好走到底，未調整
-      if(ask_BT()==TURNRIGHT){
+      if(instruct==TURNRIGHT){
         delay(300);
         right_turn();
         Serial.println("RRRRRRRRR");
         delayfornodes=1;
        }//讓車子剛好走到底，未調整
-      if(ask_BT()==TURNLEFT){
+      if(instruct==TURNLEFT){
         delay(300);
         left_turn();
         Serial.println("LLLLLLLLL");
         delayfornodes=1;
        }//讓車子剛好走到底，未調整
-      if(ask_BT()==READ){
+      if(instruct==READ){
         Serial.println("UUUUUUUUUU");
         //讀卡片rfid
         byte* id;
