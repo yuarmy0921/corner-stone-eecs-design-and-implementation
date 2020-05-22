@@ -18,35 +18,21 @@ int extern _Tp;
 // here are something you can try: left_turn, right_turn... etc.
 
 void right_turn(){
-  Serial.println("RRRRRRRRRRRRRRRRRRRRRRRRR");
-  digitalWrite(MotorL_I1,LOW);
-  digitalWrite(MotorL_I2,HIGH);
-  digitalWrite(MotorR_I3,LOW);
-  digitalWrite(MotorR_I4,HIGH);
-  
-  //參數未調整
-  analogWrite(ENA,100);
-  analogWrite(ENB,100);
-  delay(600);
+   MotorWriting(0,80);
+   delay(810);
+   MotorWriting(0,0);
+   delay(600);
+ 
 }
 void left_turn(){
-  Serial.println("LLLLLLLLLLLLLLLLLLLLLLLLLL");
-  digitalWrite(MotorL_I1,HIGH);
-  digitalWrite(MotorL_I2,LOW);
-  digitalWrite(MotorR_I3,HIGH);
-  digitalWrite(MotorR_I4,LOW);
-  //參數未調整
-  analogWrite(ENA,100);
-  analogWrite(ENB,100);
-  delay(500);
+  MotorWriting(80,0);
+   delay(810);
+   MotorWriting(0,0);
+   delay(600);
 }
-void U_turn(){Serial.println("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-  digitalWrite(MotorL_I1,HIGH);
-  digitalWrite(MotorL_I2,LOW);
-  digitalWrite(MotorR_I3,HIGH);
-  digitalWrite(MotorR_I4,LOW);
-  //參數未調整
-  analogWrite(ENA,100);
-  analogWrite(ENB,100);
-  delay(1000);
+void U_turn(){
+   MotorWriting(80,0);
+   delay(1620);
+   MotorWriting(0,0);
+   delay(600);
 }

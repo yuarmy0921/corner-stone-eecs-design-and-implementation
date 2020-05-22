@@ -18,12 +18,12 @@
 // BlueTooth
 SoftwareSerial BT(9,8);   // TX,RX on bluetooth module, 請按照自己車上的接線寫入腳位
 // L298N, 請按照自己車上的接線寫入腳位(左右不一定要跟註解寫的一樣)
-#define MotorL_I1     7 //定義 I1 接腳（右）
-#define MotorL_I2     4 //定義 I2 接腳（右）
-#define MotorR_I3     3 //定義 I3 接腳（左）
-#define MotorR_I4     2 //定義 I4 接腳（左）
-#define ENB    6 //定義 ENA (PWM調速) 接腳
-#define ENA    5 //定義 ENB (PWM調速) 接腳
+#define MotorL_I1     7 //定義 I1 接腳（左）
+#define MotorL_I2     4 //定義 I2 接腳（左）
+#define MotorR_I3     3 //定義 I3 接腳（又）
+#define MotorR_I4     2 //定義 I4 接腳（又）
+#define ENB    6 //定義 ENB (PWM調速) 接腳RIGHT
+#define ENA    5 //定義 ENA (PWM調速) 接腳LEFT
 // 循線模組, 請按照自己車上的接線寫入腳位
 #define L3 A0
 #define L2 A1
@@ -105,10 +105,26 @@ void Sensor(){
       send_msg('k');
       delay(600);
       MotorWriting(0,0);
-      if(ask_BT()==0){delay(300);delayfornodes=1;}//讓車子剛好走到底，未調整
-      if(ask_BT()==1){delay(300);right_turn();delayfornodes=1;}//讓車子剛好走到底，未調整
-      if(ask_BT()==2){delay(300);left_turn();delayfornodes=1;}//讓車子剛好走到底，未調整
-      if(ask_BT()==3){
+      delay(600);
+      
+      if(ask_BT()==0){
+        delay(300);
+        delayfornodes=1;
+       }//讓車子剛好走到底，未調整
+      if(ask_BT()==TURNRIGHT){
+        delay(300);
+        right_turn();
+        Serial.println("RRRRRRRRR");
+        delayfornodes=1;
+       }//讓車子剛好走到底，未調整
+      if(ask_BT()==TURNLEFT){
+        delay(300);
+        left_turn();
+        Serial.println("LLLLLLLLL");
+        delayfornodes=1;
+       }//讓車子剛好走到底，未調整
+      if(ask_BT()==READ){
+        Serial.println("UUUUUUUUUU");
         //讀卡片rfid
         byte* id;
         byte idSize = 0;
@@ -148,7 +164,8 @@ ControlState _state=HAULT_STATE;
 BT_CMD _cmd = NOTHING;
 
 void loop()
-{ 
+{
+
   Sensor();
  
    /*
