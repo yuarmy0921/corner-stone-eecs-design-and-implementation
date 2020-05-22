@@ -110,7 +110,7 @@ class Socket(socketio.ClientNamespace):
 if __name__ == '__main__':
     # you can create a Scoreboard object
     # you don't need to pass in the file path
-    myScoreboard = Scoreboard(None, 'haha', 0)
+    myScoreboard = Scoreboard(None, 'Gru', 0)
     # you can add uid by calling add_UID
     myScoreboard.add_UID("0087A9AB")
     # you can get the score by calling getCurrentScore

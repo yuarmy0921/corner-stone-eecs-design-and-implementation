@@ -79,7 +79,7 @@ class Maze:
             completed.append(nearest+1) 
 
         # find nearest score point
-        print(score)
+        print("unvisited deadend: ",score)
         if not score:
             return 'haha'
         nearest = score[0]
