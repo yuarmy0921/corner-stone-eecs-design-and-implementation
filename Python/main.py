@@ -29,8 +29,8 @@ def main():
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
         car_dir = 2
         #找到完整路徑(最近)
-        solution = maze.strategy(1)
         interf.tell_you("---------------------------------------------------------------------------")
+        solution = maze.strategy(1)
         interf.tell_you("Shortest path: {}".format(solution))
         #傳送指令給車，等到達下一個節點再傳送指令
         complete = False
@@ -51,9 +51,10 @@ def main():
                 #等車子送到達的hint
                 while not interf.arrival():
                     pass
+                car_dir = information[1]
             interf.tell_you("Arrive!")
             maze.nodes[solution[-1]-1].unvisited_deadend = False
-            car_dir = information[1]
+            
             UID = interf.get_UID()
             if UID:
                 point.add_UID(UID)
@@ -66,13 +67,17 @@ def main():
                 complete = True
             else:
                 complete = False
-                solution = maze.strategy(solution[-1])
                 interf.tell_you("---------------------------------------------------------------------------")
+                solution = maze.strategy(solution[-1])
                 interf.tell_you("Shortest path: {}".format(solution))
             
         interf.tell_you("Mission completed!")
         interf.tell_you("Total score: {}".format(point.getCurrentScore()))
         input("Press enter to close.")
+        try:
+            not interf.ser.is_open()
+        except:
+            interf.end_process()
         
 
     elif (sys.argv[1] == '1'):

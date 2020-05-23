@@ -38,7 +38,7 @@ class interface:
         return self.ser.SerialReadString() == "k"
 
     def end_process(self):
-        self.ser.SerialWrite('e')
+        self.ser.SerialWrite('end')
         self.ser.disconnect()
 
 if __name__ == "__main__":
