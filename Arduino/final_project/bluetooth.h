@@ -24,12 +24,13 @@ BT_CMD ask_BT(){
       cmd = BT.read();
       BT.write(cmd);
       // 2. link bluetooth message to your own command type
-      if(cmd =='1'){message=NOTHING;}
-      if(cmd =='3'){message=TURNRIGHT;}
-      if(cmd =='4'){message=TURNLEFT;}
-      if(cmd =='2'){message=READ;}
-      if(cmd =='5'){message=HAULT;}
-      if(cmd =='s'){message=START;}
+      if(cmd =='1'){message=NOTHING; Serial.println(message);}
+      if(cmd =='3'){message=TURNRIGHT; Serial.println(message);}
+      if(cmd =='4'){message=TURNLEFT; Serial.println(message);}
+      if(cmd =='2'){message=READ; Serial.println(message);}
+      if(cmd =='5'){message=HAULT; Serial.println(message);}
+      if(cmd =='s'){message=START; Serial.println(message);}
+     Serial.println(message);
       #ifdef DEBUG
       Serial.print("cmd : ");
       Serial.println(cmd);
