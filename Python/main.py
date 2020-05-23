@@ -15,7 +15,7 @@ def main():
     #讀取迷宮
     maze = mz.Maze("data/small_maze.csv")
     #建立計分表 在執行檔案時記得把遊戲模式當參數傳入!!!!
-    point = score.Scoreboard("data/UID.csv", "team_NTUEE", sys.argv[1])    
+    point = score.Scoreboard("data/UID.csv", "Gru", sys.argv[1])    
     #建立溝通介面
     #在這裡會先要求輸入port，如果輸入quit則斷線
     interf = interface.interface()   

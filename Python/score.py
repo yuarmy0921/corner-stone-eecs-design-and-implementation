@@ -20,11 +20,7 @@ class Scoreboard:
         self.team = teamName
         self.game = int(gameNum)
         #change it!!!!!!!!!!!!!
-<<<<<<< HEAD
-        self.ip = '''http://ec2-18-204-36-51.compute-1.amazonaws.com'''
-=======
         self.ip = 'http://ec2-18-204-36-51.compute-1.amazonaws.com'
->>>>>>> 17767f607614907fcb30cc029ecb39f6d1526525
 
         print("{} wants to play Game{}!".format(self.team, self.game))
         print("connecting to server......{}".format(self.ip))
@@ -114,11 +110,7 @@ class Socket(socketio.ClientNamespace):
 if __name__ == '__main__':
     # you can create a Scoreboard object
     # you don't need to pass in the file path
-<<<<<<< HEAD
-    myScoreboard = Scoreboard(None, 'haha', 0)
-=======
     myScoreboard = Scoreboard(None, 'Gru', 0)
->>>>>>> 17767f607614907fcb30cc029ecb39f6d1526525
     # you can add uid by calling add_UID
     myScoreboard.add_UID("0087A9AB")
     # you can get the score by calling getCurrentScore
