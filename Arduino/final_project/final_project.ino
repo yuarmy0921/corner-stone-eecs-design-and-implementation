@@ -88,41 +88,46 @@ double error;
 int flag=0;
 int delayfornodes=0;
 void Sensor(){
-  l3 = analogRead(L3);
-  l2 = analogRead(L2);
-  l1 = analogRead(L1);
-  r1 = analogRead(R1);
-  r2 = analogRead(R2);
-  r3 = analogRead(R3);
+  
   if(ask_BT()==5){flag=1;Serial.println("Now i can move");  Serial.println("full version");}
   
   if(ask_BT()==4){flag=0;Serial.println("Stop!!!!");}  
-
   
   if(flag==1){
-    if(l3+l2+l1+r1+r2+r3>4200&&delayfornodes==0){
+    if(l3+l2+l1+r1+r2+r3>4000&&delayfornodes==0){
       Serial.println("i find a node!");
       send_msg('k');
-      delay(600);
       MotorWriting(0,0);
-      delay(600);
+      delay(500);
       
       BT_CMD instruct;
       instruct = ask_BT();
       
       if(instruct==NOTHING){
-        delay(300);
+        MotorWriting(80,80);
+        delay(700);
+        MotorWriting(0,0);
+        delay(1000);
         delayfornodes=1;
        }//讓車子剛好走到底，未調整
       if(instruct==TURNRIGHT){
-        delay(300);
+        
+        /*MotorWriting(80,80);
+        delay(400);
+        MotorWriting(0,0);
+        delay(2000);*/
         right_turn();
+        
         Serial.println("RRRRRRRRR");
         delayfornodes=1;
        }//讓車子剛好走到底，未調整
       if(instruct==TURNLEFT){
-        delay(300);
+        MotorWriting(80,80);
+        delay(500);
+        MotorWriting(0,0);
+        delay(100);
         left_turn();
+        
         Serial.println("LLLLLLLLL");
         delayfornodes=1;
        }//讓車子剛好走到底，未調整
@@ -133,7 +138,15 @@ void Sensor(){
         byte idSize = 0;
         id = rfid(idSize);
         send_byte(id,idSize);
+        delay(2000);
+        BT_CMD second;
+        second = ask_BT();
+        while(1){
+          if(second==RESTART){break;}  
+          else {second = ask_BT();}
+         }
         //需考慮rfid開頭跟n一樣時的可能性
+        
         U_turn();
         delayfornodes=1;
       }
@@ -142,7 +155,7 @@ void Sensor(){
     else{
       PID_control(l3,l2,l1,r1,r2,r3);
       delayfornodes=0;
-      delay(100);
+      delay(50);
     }
   
   }
@@ -167,10 +180,17 @@ ControlState _state=HAULT_STATE;
 BT_CMD _cmd = NOTHING;
 
 void loop()
-{
-
+{ l3 = analogRead(L3);
+  l2 = analogRead(L2);
+  l1 = analogRead(L1);
+  r1 = analogRead(R1);
+  r2 = analogRead(R2);
+  r3 = analogRead(R3);
+  //right_turn();
   Sensor();
- 
+  //MotorWriting(70,76);
+  //PID_control(l3,l2,l1,r1,r2,r3);
+  //U_turn();
    /*
    // search graph
    if(_state == SEARCH_STATE) Search_Mode();

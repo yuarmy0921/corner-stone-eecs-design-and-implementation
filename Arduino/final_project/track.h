@@ -46,8 +46,8 @@ void MotorWriting(double vL, double vR) {
     digitalWrite(MotorL_I1, HIGH);
     digitalWrite(MotorL_I2, LOW);
   }
-  analogWrite(ENA,truevR);
-  analogWrite(ENB,truevL);
+  analogWrite(ENA,truevL);
+  analogWrite(ENB,truevR);
   
 }// MotorWriting
 
@@ -94,13 +94,13 @@ void PID_control(int l3,int l2,int l1,int r1,int r2,int r3){
   
   //Serial.println(error_);
          
-  MotorWriting(70-error_, 70+error_);   //輸入：左 右
-  /*Serial.println(" ");
+  MotorWriting(70+error_,70-error_);   //輸入：左 右
+ /* Serial.println(" ");
   Serial.print("error: ");
   Serial.println(error_);
   Serial.print("left: ");
   Serial.println(70-error_);
   Serial.print("right: ");
   Serial.println(70+error_);
- */ 
+  */
 }
