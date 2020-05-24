@@ -27,7 +27,7 @@ def main():
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
-        car_dir = 2
+        car_dir = 2                                                             
         #找到完整路徑(最近)
         interf.tell_you("---------------------------------------------------------------------------")
         solution = maze.strategy(1)
