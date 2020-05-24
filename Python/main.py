@@ -21,6 +21,7 @@ def main():
     interf = interface.interface()   
     # TODO : Initialize necessary variables
     maze.setNode()
+    maze.nd_dict["h"] = "haha"
     interf.send_action(input("Press s to activate: "))
     #清除快取
     interf.ser.ser.flushInput()
