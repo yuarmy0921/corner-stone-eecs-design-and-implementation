@@ -68,7 +68,6 @@ class Scoreboard:
                 else:
                     print("Wrong order!! You should go to card {} first!".format(self.sequence[self.sequence_idx]))
                     print("")
-
-
     def getCurrentScore(self):
         return int(self.totalScore)
+

@@ -51,8 +51,10 @@ class bluetooth:
         sleep(0.05)
         waiting = self.ser.inWaiting()    #先判斷讀取到幾個位元組
         rv = self.ser.read(waiting)   #再把這一組讀出來
+        
         if(rv):
+            print("rv: ", rv)
             UID = hex(int.from_bytes(rv, byteorder='big', signed=False))   #從最高位照順序存下來
             self.ser.flushInput()    #清除快取
-            return UID
+            return UID[4:]
         return 0
