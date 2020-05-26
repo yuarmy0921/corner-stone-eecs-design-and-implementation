@@ -29,14 +29,9 @@ class interface:
 
     def send_action(self,dirc):
         # TODO : send the action to car
-<<<<<<< HEAD
-        print("tag2")
-        self.ser.SerialWrite(dirc)
-=======
         print("start send action.")
         self.ser.SerialWrite(dirc)
         print("action sent.\n")
->>>>>>> f8e864a392eb8c871ab5e16db27e8e03a0cfa7bf
         #return self.ser.SerialReadString()   #確認有接收到指令
 
     def arrival(self):

@@ -82,6 +82,7 @@ def main():
                 complete = False
                 interf.tell_you("---------------------------------------------------------------------------")
                 solution = maze.strategy(solution[-1])
+
                 interf.tell_you("Shortest path: {}".format(solution))
             
         interf.tell_you("Mission completed!")
@@ -123,6 +124,10 @@ def main():
         interf.tell_you("Mission completed!")
         interf.tell_you("Total score: {}".format(point.getCurrentScore()))
         input("Press enter to close.")
+        try:
+            not interf.ser.is_open()
+        except:
+            interf.end_process()
         
 
     #自我測試：執行main之後，在interface(terminal)傳送指令，儲存到藍芽
