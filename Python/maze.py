@@ -94,6 +94,7 @@ class Maze:
         while pre_node != nd:
             route.insert(1, pre_node)
             pre_node = pre[pre_node-1]
+        route = route + [route[-2]]
         print('Route:', route, '\n')
         return route
 
@@ -129,6 +130,7 @@ class Maze:
         while pre_node != nd_from:
             route.insert(1, pre_node)
             pre_node = pre[pre_node-1]
+        route = route + [route[-2]]
         print('From %d to %d, Route:'%(nd_from, nd_to), route)
         return route
 
