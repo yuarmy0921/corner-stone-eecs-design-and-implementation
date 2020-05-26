@@ -18,21 +18,12 @@ int extern _Tp;
 // here are something you can try: left_turn, right_turn... etc.
 
 void right_turn(){
-   MotorWriting(0,80);
-   delay(810);
-   MotorWriting(0,0);
-   delay(600);
- 
+   MotorWriting(-60,60);
 }
 void left_turn(){
-  MotorWriting(80,0);
-   delay(810);
-   MotorWriting(0,0);
-   delay(600);
+  MotorWriting(60,-60);
 }
 void U_turn(){
-   MotorWriting(80,0);
-   delay(1620);
-   MotorWriting(0,0);
-   delay(600);
+   MotorWriting(50,-50);
+   
 }

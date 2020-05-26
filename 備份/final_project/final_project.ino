@@ -94,61 +94,6 @@ void Sensor(){
   r1 = analogRead(R1);
   r2 = analogRead(R2);
   r3 = analogRead(R3);
-  if(ask_BT()==5){flag=1;Serial.println("Now i can move");  Serial.println("full version");}
-  
-  if(ask_BT()==4){flag=0;Serial.println("Stop!!!!");}  
-
-  
-  if(flag==1){
-    if(l3+l2+l1+r1+r2+r3>4200&&delayfornodes==0){
-      Serial.println("i find a node!");
-      send_msg('k');
-      delay(600);
-      MotorWriting(0,0);
-      delay(600);
-      
-      BT_CMD instruct;
-      instruct = ask_BT();
-      
-      if(instruct==NOTHING){
-        delay(300);
-        delayfornodes=1;
-       }//讓車子剛好走到底，未調整
-      if(instruct==TURNRIGHT){
-        delay(300);
-        right_turn();
-        Serial.println("RRRRRRRRR");
-        delayfornodes=1;
-       }//讓車子剛好走到底，未調整
-      if(instruct==TURNLEFT){
-        delay(300);
-        left_turn();
-        Serial.println("LLLLLLLLL");
-        delayfornodes=1;
-       }//讓車子剛好走到底，未調整
-      if(instruct==READ){
-        Serial.println("UUUUUUUUUU");
-        //讀卡片rfid
-        byte* id;
-        byte idSize = 0;
-        id = rfid(idSize);
-        send_byte(id,idSize);
-        //需考慮rfid開頭跟n一樣時的可能性
-        U_turn();
-        delayfornodes=1;
-      }
-      else{Serial.println("wheres my instruct");}
-    }
-    else{
-      PID_control(l3,l2,l1,r1,r2,r3);
-      delayfornodes=0;
-      delay(100);
-    }
-  
-  }
-  else{
-    MotorWriting(0,0);
-  }
 }
  
 // variable for motor power
@@ -161,15 +106,30 @@ enum ControlState
    SEARCH_STATE,
 };
 
-ControlState _state=HAULT_STATE;
-
-// enum for bluetooth message, reference in bluetooth.h line 2
-BT_CMD _cmd = NOTHING;
 
 void loop()
 {
-
-  Sensor();
+  if(lastInstruct == instruct){
+    PID_control(l3, l2, l1, r1, r2, r3);
+    MotorWriting(70-error_, 70+error_);   //輸入：左 右
+    } 
+  else{
+    //一直轉直到error > 0
+    //再回到循跡模式
+    if(instruct == TURNRIGHT){
+      while(error == 0){
+        right_turn();
+        error = PID_control(l3, l2, l1, r1, r2, r3);
+      }
+    } else if(instruct == TURNLEFT){
+      while(error == 0){
+        left_turn();
+        error = PID_control(l3, l2, l1, r1, r2, r3);
+      }
+    } else {
+    
+    }
+  } 
  
    /*
    // search graph

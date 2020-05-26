@@ -23,6 +23,7 @@ def main():
     maze.setNode()
     maze.nd_dict["h"] = "haha"
     interf.send_action(input("Press s to activate: "))
+    print("tag")
     #清除快取
     interf.ser.ser.flushInput()
     if (sys.argv[1] == '0'):
@@ -58,6 +59,7 @@ def main():
             
             UID = interf.get_UID()
             if UID:
+                interf.tell_you(UID)
                 point.add_UID(UID)
             interf.tell_you("Current score: {}".format(point.getCurrentScore()))
             check = 0
