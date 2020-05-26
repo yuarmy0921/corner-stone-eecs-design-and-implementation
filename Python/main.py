@@ -25,18 +25,19 @@ def main():
     interf.send_action(input("Press s to activate: "))
     print("tag")
     #清除快取
+    time.sleep(0.5)
     interf.ser.ser.flushInput()
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
-        car_dir = 2
+        car_dir = 2                                                             
         #找到完整路徑(最近)
         interf.tell_you("---------------------------------------------------------------------------")
         solution = maze.strategy(1)
         interf.tell_you("Shortest path: {}".format(solution))
         #傳送指令給車，等到達下一個節點再傳送指令
         complete = False
-        
+        UID = 0
         while not complete:
             #先檢查藍芽
             if not interf.ser.is_open():
@@ -46,18 +47,27 @@ def main():
             for i in range(len(solution)-1):
                 information = maze.getAction(car_dir, solution[i], solution[i+1])
                 interf.tell_you("Information: {}".format(information))
+                #送這個東西的當下會馬上寫一樣的東西進buffer
                 interf.send_action(information[0])
+                #車收到指令開始計時(t=0)
+                #我收到同樣的東西後洗掉
+                if(information[0] == "2"):
+                    time.sleep(2)
+                    UID = interf.get_UID()
+                    print("UID ------", UID)
+                    interf.send_action("c")
+                    time.sleep(1)
                 #等車子回傳一模一樣的指令
-                time.sleep(1)
+                time.sleep(0.5)
                 interf.tell_you("I have already received: {}".format(interf.get_status()))
                 #等車子送到達的hint
+                #指令洗掉了
                 while not interf.arrival():
                     pass
                 car_dir = information[1]
             interf.tell_you("Arrive!")
             maze.nodes[solution[-1]-1].unvisited_deadend = False
             
-            UID = interf.get_UID()
             if UID:
                 interf.tell_you(UID)
                 point.add_UID(UID)
