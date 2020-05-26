@@ -169,5 +169,6 @@ def test():
     maze.setNode()
     for i in range(1, maze.numbers+1):
         maze.Dijk(i)
+    maze.Dijk_2(1,6)
 if __name__ == '__main__':
     test()

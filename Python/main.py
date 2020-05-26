@@ -22,6 +22,7 @@ def main():
     # TODO : Initialize necessary variables
     maze.setNode()
     maze.nd_dict["h"] = "haha"
+
     #清除快取
     time.sleep(0.5)
     interf.ser.ser.flushInput()
@@ -101,6 +102,7 @@ def main():
         while cp < len(route):
             #找到路徑
             solution = maze.strategy_2(route[cp-1], route[cp])
+            route[cp] = solution[-1]
             interf.tell_you("Shortest path: {}".format(solution))
             #一條路徑跑完
             for i in range(len(solution)-1):
