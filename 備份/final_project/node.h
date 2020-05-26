@@ -18,6 +18,16 @@ int extern _Tp;
 // here are something you can try: left_turn, right_turn... etc.
 
 void right_turn(){
+<<<<<<< HEAD:備份/final_project/node.h
+   MotorWriting(-60,60);
+}
+void left_turn(){
+  MotorWriting(60,-60);
+}
+void U_turn(){
+   MotorWriting(50,-50);
+   
+=======
    MotorWriting(150,150);
    delay(280);//860isok
    MotorWriting(0,0);
@@ -101,4 +111,5 @@ void U_turn(){
      delay(10);
    }
    Serial.println("trun over");
+>>>>>>> f8e864a392eb8c871ab5e16db27e8e03a0cfa7bf:Arduino/final_project/node.h
 }

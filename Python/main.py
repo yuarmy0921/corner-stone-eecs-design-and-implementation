@@ -22,6 +22,7 @@ def main():
     # TODO : Initialize necessary variables
     maze.setNode()
     maze.nd_dict["h"] = "haha"
+
     #清除快取
     time.sleep(0.5)
     interf.ser.ser.flushInput()
