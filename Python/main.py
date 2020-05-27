@@ -66,7 +66,7 @@ def main():
                     pass
                 car_dir = information[1]
             interf.tell_you("Arrive!")
-            maze.nodes[solution[-1]-1].unvisited_deadend = False
+            maze.nodes[solution[-2]-1].unvisited_deadend = False
             
             if UID:
                 interf.tell_you(UID)
@@ -113,6 +113,11 @@ def main():
                     time.sleep(2)
                     UID = interf.get_UID()
                     print("UID ------", UID)
+                    while not UID:
+                        interf.send_action("g")
+                        time.sleep(1)
+                        UID = interf.get_UID()
+                        pass
                     interf.send_action("c")
                     time.sleep(1)
                 #等車子回傳一模一樣的指令
