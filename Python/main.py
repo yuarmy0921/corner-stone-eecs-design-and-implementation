@@ -79,12 +79,7 @@ def main():
                 complete = True
             else:
                 complete = False
-<<<<<<< HEAD
-                interf.tell_you("---------------------------------------------------------------------------")
-                solution = maze.strategy(solution[-1])
 
-=======
->>>>>>> e86602eaf6338f5b5be8808f608249712d81756b
                 interf.tell_you("Shortest path: {}".format(solution))
             
         interf.tell_you("Mission completed!")

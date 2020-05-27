@@ -36,7 +36,6 @@ class bluetooth:
     def SerialWrite(self,output):      #接收指令的部分
         # send = 's'.encode("utf-8")
         #把接收到的字元指令解碼再寫進藍芽
-        print("tag3")
         send = output.encode("utf-8")
         self.ser.write(send)
 
