@@ -22,13 +22,14 @@ def main():
     # TODO : Initialize necessary variables
     maze.setNode()
     maze.nd_dict["h"] = "haha"
-    interf.send_action(input("Press s to activate: "))
+
     #清除快取
     time.sleep(0.5)
     interf.ser.ser.flushInput()
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
+        interf.send_action(input("Press s to activate: "))
         car_dir = 2                                                             
         #找到完整路徑(最近)
         interf.tell_you("---------------------------------------------------------------------------")
@@ -65,22 +66,25 @@ def main():
                     pass
                 car_dir = information[1]
             interf.tell_you("Arrive!")
-            maze.nodes[solution[-1]-1].unvisited_deadend = False
+            maze.nodes[solution[-2]-1].unvisited_deadend = False
             
             if UID:
                 interf.tell_you(UID)
                 point.add_UID(UID)
             interf.tell_you("Current score: {}".format(point.getCurrentScore()))
-            check = 0
-            for i in range(len(maze.nodes)-1):
-                if maze.nodes[i].unvisited_deadend == False:
-                    check += 1
-            if check == len(maze.nodes):
+            interf.tell_you("---------------------------------------------------------------------------")
+                
+            solution = maze.strategy(solution[-1])
+            if solution == "haha":
                 complete = True
             else:
                 complete = False
+<<<<<<< HEAD
                 interf.tell_you("---------------------------------------------------------------------------")
                 solution = maze.strategy(solution[-1])
+
+=======
+>>>>>>> e86602eaf6338f5b5be8808f608249712d81756b
                 interf.tell_you("Shortest path: {}".format(solution))
             
         interf.tell_you("Mission completed!")
@@ -95,33 +99,55 @@ def main():
     elif (sys.argv[1] == '1'):
         print("Mode 1: for treasure-hunting with rule 2")
         # TODO : for treasure-hunting with rule 2, which requires you to hunt as many specified treasures as possible
-        route = list(map(int,input("Enter route(separate with space): ").strip().split()))
         car_dir = 2
+        UID = 0
         #傳送開始指令給車
         interf.send_action(input("Press s to start: "))
         cp = 1 # current point's order
+        route = point.sequence
         while cp < len(route):
             #找到路徑
             solution = maze.strategy_2(route[cp-1], route[cp])
+            route[cp] = solution[-1]
             interf.tell_you("Shortest path: {}".format(solution))
             #一條路徑跑完
             for i in range(len(solution)-1):
                 information = maze.getAction(car_dir, solution[i], solution[i+1])
                 interf.tell_you(information)
                 interf.send_action(information[0])
+                if(information[0] == "2"):
+                    time.sleep(2)
+                    UID = interf.get_UID()
+                    print("UID ------", UID)
+                    while not UID:
+                        interf.send_action("g")
+                        time.sleep(1)
+                        UID = interf.get_UID()
+                        pass
+                    interf.send_action("c")
+                    time.sleep(1)
+                #等車子回傳一模一樣的指令
+                time.sleep(0.5)
+                interf.tell_you("I have already received: {}".format(interf.get_status()))
                 #等車子送到達的hint
+                #指令洗掉了
                 while not interf.arrival():
                     pass
-            car_dir = information[1]
-            UID = interf.get_UID()
+                car_dir = information[1]
             if UID:
+                interf.tell_you(UID)
                 point.add_UID(UID)
             interf.tell_you("Current score: {}".format(point.getCurrentScore()))
+            interf.tell_you("---------------------------------------------------------------------------")
             cp += 1
         # completed !
         interf.tell_you("Mission completed!")
         interf.tell_you("Total score: {}".format(point.getCurrentScore()))
         input("Press enter to close.")
+        try:
+            not interf.ser.is_open()
+        except:
+            interf.end_process()
         
 
     #自我測試：執行main之後，在interface(terminal)傳送指令，儲存到藍芽

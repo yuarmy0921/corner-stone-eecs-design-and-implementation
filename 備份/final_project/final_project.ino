@@ -88,6 +88,14 @@ double error;
 int flag=0;
 int delayfornodes=0;
 void Sensor(){
+<<<<<<< HEAD:備份/final_project/final_project.ino
+  l3 = analogRead(L3);
+  l2 = analogRead(L2);
+  l1 = analogRead(L1);
+  r1 = analogRead(R1);
+  r2 = analogRead(R2);
+  r3 = analogRead(R3);
+=======
   
   if(ask_BT()==5){flag=1;Serial.println("Now i can move");  Serial.println("full version");}
   
@@ -189,6 +197,7 @@ void Sensor(){
   else{
     MotorWriting(0,0);
   }
+>>>>>>> f8e864a392eb8c871ab5e16db27e8e03a0cfa7bf:Arduino/final_project/final_project.ino
 }
  
 // variable for motor power
@@ -201,6 +210,7 @@ enum ControlState
    SEARCH_STATE,
 };
 
+<<<<<<< HEAD:Arduino/final_project/final_project.ino
 ControlState _state=HAULT_STATE;
 
 // enum for bluetooth message, reference in bluetooth.h line 2
@@ -209,6 +219,36 @@ int small = 0;int yee = 0;
 void loop()
 { 
   l3 = analogRead(L3);
+=======
+
+void loop()
+<<<<<<< HEAD:備份/final_project/final_project.ino
+{
+  if(lastInstruct == instruct){
+    PID_control(l3, l2, l1, r1, r2, r3);
+    MotorWriting(70-error_, 70+error_);   //輸入：左 右
+    } 
+  else{
+    //一直轉直到error > 0
+    //再回到循跡模式
+    if(instruct == TURNRIGHT){
+      while(error == 0){
+        right_turn();
+        error = PID_control(l3, l2, l1, r1, r2, r3);
+      }
+    } else if(instruct == TURNLEFT){
+      while(error == 0){
+        left_turn();
+        error = PID_control(l3, l2, l1, r1, r2, r3);
+      }
+    } else {
+    
+    }
+  } 
+ 
+=======
+{ l3 = analogRead(L3);
+>>>>>>> 1a35dbe27b9e71ec66488cbd167f7f0aac8c0d1f:備份/final_project/final_project.ino
   l2 = analogRead(L2);
   l1 = analogRead(L1);
   r1 = analogRead(R1);
@@ -219,6 +259,7 @@ Sensor();
   //MotorWriting(70,76);
   //PID_control(l3,l2,l1,r1,r2,r3);
   //U_turn();
+<<<<<<< HEAD:Arduino/final_project/final_project.ino
   /*if(l3+l2+l1+r1+r2+r3>4000&&small%3==0&&yee==0){right_turn();small++;}
   if(l3+l2+l1+r1+r2+r3>4000&&small%3==1&&yee==0){right_turn();small++;}
   if(l3+l2+l1+r1+r2+r3>4000&&small%3==2&&yee==0){MotorWriting(0,0);delay(500);U_turn();small++;yee++;}
@@ -226,6 +267,9 @@ Sensor();
   if(l3+l2+l1+r1+r2+r3>4000&&small%3==1&&yee==0){left_turn();small++;}
   if(l3+l2+l1+r1+r2+r3>4000&&small%3==2&&yee==0){MotorWriting(0,0);delay(500);U_turn();small++;yee++;}
   else{PID_control(l3,l2,l1,r1,r2,r3);}*/
+=======
+>>>>>>> f8e864a392eb8c871ab5e16db27e8e03a0cfa7bf:Arduino/final_project/final_project.ino
+>>>>>>> 1a35dbe27b9e71ec66488cbd167f7f0aac8c0d1f:備份/final_project/final_project.ino
    /*
    // search graph
    if(_state == SEARCH_STATE) Search_Mode();
