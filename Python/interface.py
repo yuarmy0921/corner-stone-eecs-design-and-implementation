@@ -29,7 +29,6 @@ class interface:
 
     def send_action(self,dirc):
         # TODO : send the action to car
-
         print("start send action.")
         self.ser.SerialWrite(dirc)
         print("action sent.\n")

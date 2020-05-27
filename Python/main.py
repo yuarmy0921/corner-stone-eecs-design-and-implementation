@@ -13,7 +13,7 @@ import os
 #執行的任務：匯入迷宮、紀錄分數、創建溝通介面、決定遊戲模式
 def main():
     #讀取迷宮
-    maze = mz.Maze("data/final_maze_2.csv")
+    maze = mz.Maze("data/medium_maze.csv")
     #建立計分表 在執行檔案時記得把遊戲模式當參數傳入!!!!
     point = score_new.Scoreboard("data/UID.csv", "Gru", sys.argv[1])    
     #建立溝通介面
