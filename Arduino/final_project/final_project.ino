@@ -104,10 +104,30 @@ void Sensor(){
       instruct = ask_BT();
       
       if(instruct==NOTHING){
-        MotorWriting(80,80);
-        delay(700);
+        MotorWriting(150,150);
+        delay(240);//860isok
         MotorWriting(0,0);
-        delay(1000);
+        delay(500);
+         l3 = analogRead(L3);
+         l2 = analogRead(L2);
+         l1 = analogRead(L1);
+         r1 = analogRead(R1);
+         r2 = analogRead(R2);
+         r3 = analogRead(R3);
+         while(l1+l2+l3+r1+r2+r3<900){     
+         l3 = analogRead(L3);
+         l2 = analogRead(L2);
+         l1 = analogRead(L1);
+         r1 = analogRead(R1);
+         r2 = analogRead(R2);
+         r3 = analogRead(R3);
+         MotorWriting(0,80);
+         delay(80);
+         MotorWriting(0,0);
+         delay(20);
+         }
+   
+      
         delayfornodes=1;
        }//讓車子剛好走到底，未調整
       if(instruct==TURNRIGHT){
@@ -122,10 +142,10 @@ void Sensor(){
         delayfornodes=1;
        }//讓車子剛好走到底，未調整
       if(instruct==TURNLEFT){
-        MotorWriting(80,80);
+        /*MotorWriting(80,80);
         delay(500);
         MotorWriting(0,0);
-        delay(100);
+        delay(100);*/
         left_turn();
         
         Serial.println("LLLLLLLLL");
@@ -143,6 +163,13 @@ void Sensor(){
         second = ask_BT();
         while(1){
           if(second==RESTART){break;}  
+          else if(second==TIGHT){
+            byte* id;
+            byte idSize = 0;
+            id = rfid(idSize);
+            send_byte(id,idSize);
+            second = ask_BT();
+          }
           else {second = ask_BT();}
          }
         //需考慮rfid開頭跟n一樣時的可能性
@@ -178,19 +205,27 @@ ControlState _state=HAULT_STATE;
 
 // enum for bluetooth message, reference in bluetooth.h line 2
 BT_CMD _cmd = NOTHING;
-
+int small = 0;int yee = 0;
 void loop()
-{ l3 = analogRead(L3);
+{ 
+  l3 = analogRead(L3);
   l2 = analogRead(L2);
   l1 = analogRead(L1);
   r1 = analogRead(R1);
   r2 = analogRead(R2);
   r3 = analogRead(R3);
   //right_turn();
-  Sensor();
+Sensor();
   //MotorWriting(70,76);
   //PID_control(l3,l2,l1,r1,r2,r3);
   //U_turn();
+  /*if(l3+l2+l1+r1+r2+r3>4000&&small%3==0&&yee==0){right_turn();small++;}
+  if(l3+l2+l1+r1+r2+r3>4000&&small%3==1&&yee==0){right_turn();small++;}
+  if(l3+l2+l1+r1+r2+r3>4000&&small%3==2&&yee==0){MotorWriting(0,0);delay(500);U_turn();small++;yee++;}
+  if(l3+l2+l1+r1+r2+r3>4000&&small%3==0&&yee==0){left_turn();small++;}
+  if(l3+l2+l1+r1+r2+r3>4000&&small%3==1&&yee==0){left_turn();small++;}
+  if(l3+l2+l1+r1+r2+r3>4000&&small%3==2&&yee==0){MotorWriting(0,0);delay(500);U_turn();small++;yee++;}
+  else{PID_control(l3,l2,l1,r1,r2,r3);}*/
    /*
    // search graph
    if(_state == SEARCH_STATE) Search_Mode();
