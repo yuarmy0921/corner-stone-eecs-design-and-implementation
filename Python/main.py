@@ -1,6 +1,6 @@
 from node import *
 import maze as mz
-import score
+import score_new
 import interface
 import time
 
@@ -13,9 +13,9 @@ import os
 #執行的任務：匯入迷宮、紀錄分數、創建溝通介面、決定遊戲模式
 def main():
     #讀取迷宮
-    maze = mz.Maze("data/small_maze.csv")
+    maze = mz.Maze("data/final_maze_2.csv")
     #建立計分表 在執行檔案時記得把遊戲模式當參數傳入!!!!
-    point = score.Scoreboard("data/UID.csv", "Gru", sys.argv[1])    
+    point = score_new.Scoreboard("data/UID.csv", "Gru", sys.argv[1])    
     #建立溝通介面
     #在這裡會先要求輸入port，如果輸入quit則斷線
     interf = interface.interface()   
