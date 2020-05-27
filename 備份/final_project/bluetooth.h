@@ -11,7 +11,7 @@
 
 #include<SoftwareSerial.h>
 enum BT_CMD {
-  NOTHING,TURNRIGHT,TURNLEFT,READ,HAULT,START,RESTART
+  NOTHING,TURNRIGHT,TURNLEFT,READ,HAULT,START,RESTART,TIGHT
   // TODO: add your own command type here
 };
 
@@ -31,6 +31,7 @@ BT_CMD ask_BT(){
       if(cmd =='5'){message=HAULT; Serial.println(message);}
       if(cmd =='s'){message=START; Serial.println(message);}
       if(cmd =='c'){message=RESTART;Serial.println("i can move again" );}
+      if(cmd =='g'){message=TIGHT;}
       #ifdef DEBUG
       Serial.print("cmd : ");
       Serial.println(cmd);
