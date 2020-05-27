@@ -1,3 +1,5 @@
+import pandas
+import numpy as np
 import requests
 import socketio
 import sys
@@ -19,8 +21,7 @@ class Scoreboard:
         self.totalScore = 0
         self.team = teamName
         self.game = int(gameNum)
-        #change it!!!!!!!!!!!!!
-        self.ip = 'http://ec2-18-204-36-51.compute-1.amazonaws.com'
+        self.ip = 'https://creative.ntuee.org'
 
         print("{} wants to play Game{}!".format(self.team, self.game))
         print("connecting to server......{}".format(self.ip))
@@ -105,16 +106,14 @@ class Socket(socketio.ClientNamespace):
 
     def add_UID(self, UID_str):
         self.emit("add_UID", UID_str)
+    #secret backdoor for TA
+    def stop_game(self):
+        self.emit("stop_game")
 
 
 if __name__ == '__main__':
-    # you can create a Scoreboard object
-    # you don't need to pass in the file path
-    myScoreboard = Scoreboard(None, 'Gru', 0)
-
-    # you can add uid by calling add_UID
-    myScoreboard.add_UID("0087A9AB")
-    # you can get the score by calling getCurrentScore
+    myScoreboard = Scoreboard(None, '藤原豆腐店', 1)
+    #myScoreboard.add_UID("B08676A2")
+    #myScoreboard.add_UID("0087A9AB")
+    #myScoreboard.Socket.emit("stop_game")
     print(myScoreboard.getCurrentScore())
-    # everything is just like usual
-    # except make sure you have internet access ;)

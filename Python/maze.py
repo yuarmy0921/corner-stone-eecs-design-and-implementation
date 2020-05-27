@@ -171,7 +171,7 @@ def test():
     nd = 1
     complete = False
     while not complete:
-        s = maze.strategy(nd)[0]
+        s = maze.strategy(nd)
         if s == 'haha':
             complete = True
         else:
