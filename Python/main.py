@@ -13,7 +13,7 @@ import os
 #執行的任務：匯入迷宮、紀錄分數、創建溝通介面、決定遊戲模式
 def main():
     #讀取迷宮
-    maze = mz.Maze("data/small_maze.csv")
+    maze = mz.Maze("data/medium_maze.csv")
     #建立計分表 在執行檔案時記得把遊戲模式當參數傳入!!!!
     point = score.Scoreboard("data/UID.csv", "Gru", sys.argv[1])    
     #建立溝通介面
@@ -30,7 +30,7 @@ def main():
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
         interf.send_action(input("Press s to activate: "))
-        car_dir = 2                                                             
+        car_dir = 1                                                             
         #找到完整路徑(最近)
         interf.tell_you("---------------------------------------------------------------------------")
         solution = maze.strategy(1)
@@ -53,17 +53,27 @@ def main():
                 #我收到同樣的東西後洗掉
                 if(information[0] == "2"):
                     time.sleep(2)
-                    UID = interf.get_UID()
+                    try:
+                        UID = interf.get_UID()
+                    except:
+                        interf.tell_you("Wrong format")
                     print("UID ------", UID)
                     interf.send_action("c")
                     time.sleep(1)
+
                 #等車子回傳一模一樣的指令
                 time.sleep(0.5)
-                interf.tell_you("I have already received: {}".format(interf.get_status()))
+                try:
+                    interf.tell_you("I have already received: {}".format(interf.get_status()))
+                except:
+                    pass
                 #等車子送到達的hint
                 #指令洗掉了
-                while not interf.arrival():
-                    pass
+                try:
+                    while not interf.arrival():
+                        pass
+                except:
+                    interf.tell_you("Wrong format")
                 car_dir = information[1]
             interf.tell_you("Arrive!")
             maze.nodes[solution[-2]-1].unvisited_deadend = False
@@ -112,22 +122,33 @@ def main():
                 interf.send_action(information[0])
                 if(information[0] == "2"):
                     time.sleep(2)
-                    UID = interf.get_UID()
+                    try:
+                        UID = interf.get_UID()
+                    except:
+                        pass
                     print("UID ------", UID)
                     while not UID:
                         interf.send_action("g")
                         time.sleep(1)
-                        UID = interf.get_UID()
-                        pass
+                        try:
+                            UID = interf.get_UID()
+                        except:
+                            interf.tell_you("Wrong format")
                     interf.send_action("c")
                     time.sleep(1)
                 #等車子回傳一模一樣的指令
                 time.sleep(0.5)
-                interf.tell_you("I have already received: {}".format(interf.get_status()))
+                try:
+                    interf.tell_you("I have already received: {}".format(interf.get_status()))
+                except:
+                    interf.tell_you("Wrong format")
                 #等車子送到達的hint
                 #指令洗掉了
-                while not interf.arrival():
-                    pass
+                try:
+                    while not interf.arrival():
+                        pass
+                except:
+                    interf.tell_you("Wrong format")
                 car_dir = information[1]
             if UID:
                 interf.tell_you(UID)
