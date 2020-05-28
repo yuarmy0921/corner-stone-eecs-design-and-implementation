@@ -21,9 +21,9 @@ void right_turn(){
    MotorWriting(150,150);
    delay(240);//860isok
    MotorWriting(0,0);
-   delay(500);
+   delay(300);
    MotorWriting(100,-100);
-   delay(250);//860isok
+   delay(400);//860isok
    MotorWriting(0,0);
    delay(500);
   l3 = analogRead(L3);
@@ -39,10 +39,10 @@ void right_turn(){
   r1 = analogRead(R1);
   r2 = analogRead(R2);
   r3 = analogRead(R3);
-     MotorWriting(70,-70);
-     delay(80);
-     MotorWriting(0,0);
-     delay(20);
+     MotorWriting(100,-100);
+     delay(50);
+         MotorWriting(0,0);
+         delay(30);
    }
    MotorWriting(0,0);
      delay(100);
@@ -75,10 +75,10 @@ void left_turn(){
    }
    Serial.println("trun over");
    */
-    MotorWriting(150,150);
+   MotorWriting(150,150);
    delay(280);//860isok
    MotorWriting(0,0);
-   delay(500);
+   delay(300);
    MotorWriting(-100,100);
    delay(400);//860isok
    MotorWriting(0,0);
@@ -96,10 +96,10 @@ void left_turn(){
   r1 = analogRead(R1);
   r2 = analogRead(R2);
   r3 = analogRead(R3);
-     MotorWriting(-77,77);
-     delay(80);
-     MotorWriting(0,0);
-     delay(20);
+     MotorWriting(-100,100);
+     delay(50);
+         MotorWriting(0,0);
+         delay(30);
    }
    MotorWriting(0,0);
      delay(100);
@@ -111,7 +111,7 @@ void U_turn(){
    //MotorWriting(70,76);
    //delay(500);
    MotorWriting(100,-110);
-   delay(740);//860isok
+   delay(840);//860isok
    MotorWriting(0,0);
    delay(500);
     l3 = analogRead(L3);
@@ -130,7 +130,7 @@ void U_turn(){
      MotorWriting(-75,75);
      delay(80);
      MotorWriting(0,0);
-     delay(20);
+     delay(30);
    }
    Serial.println("trun over");
 }

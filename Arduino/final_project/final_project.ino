@@ -107,24 +107,22 @@ void Sensor(){
         MotorWriting(150,150);
         delay(240);//860isok
         MotorWriting(0,0);
-        delay(500);
+        delay(400);        
          l3 = analogRead(L3);
          l2 = analogRead(L2);
          l1 = analogRead(L1);
          r1 = analogRead(R1);
          r2 = analogRead(R2);
          r3 = analogRead(R3);
-         while(l1+l2+l3+r1+r2+r3<900){     
-         l3 = analogRead(L3);
-         l2 = analogRead(L2);
-         l1 = analogRead(L1);
-         r1 = analogRead(R1);
-         r2 = analogRead(R2);
-         r3 = analogRead(R3);
-         MotorWriting(0,80);
-         delay(80);
-         MotorWriting(0,0);
-         delay(20);
+         if(l1+l2+l3+r1+r2+r3<1000){MotorWriting(80,-80);delay(150);MotorWriting(0,0);delay(400);}
+         while(l1+l2+r1+r2<900){     
+           l3 = analogRead(L3);
+           l2 = analogRead(L2);
+           l1 = analogRead(L1);
+           r1 = analogRead(R1);
+           r2 = analogRead(R2);
+           r3 = analogRead(R3);
+           MotorWriting(0,80);
          }
    
       
@@ -215,10 +213,12 @@ void loop()
   r2 = analogRead(R2);
   r3 = analogRead(R3);
   //right_turn();
-Sensor();
-  //MotorWriting(70,76);
+  //Sensor();
+  MotorWriting(70,76);
   //PID_control(l3,l2,l1,r1,r2,r3);
   //U_turn();
+  //if(l3+l2+l1+r1+r2+r3>4000){right_turn();}
+  //else{PID_control(l3,l2,l1,r1,r2,r3);}
   /*if(l3+l2+l1+r1+r2+r3>4000&&small%3==0&&yee==0){right_turn();small++;}
   if(l3+l2+l1+r1+r2+r3>4000&&small%3==1&&yee==0){right_turn();small++;}
   if(l3+l2+l1+r1+r2+r3>4000&&small%3==2&&yee==0){MotorWriting(0,0);delay(500);U_turn();small++;yee++;}
