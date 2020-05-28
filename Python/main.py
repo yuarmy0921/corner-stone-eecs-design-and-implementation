@@ -1,6 +1,6 @@
 from node import *
 import maze as mz
-import score
+import score_new
 import interface
 import time
 
@@ -15,7 +15,7 @@ def main():
     #讀取迷宮
     maze = mz.Maze("data/medium_maze.csv")
     #建立計分表 在執行檔案時記得把遊戲模式當參數傳入!!!!
-    point = score.Scoreboard("data/UID.csv", "Gru", sys.argv[1])    
+    point = score_new.Scoreboard("data/UID.csv", "Gru", sys.argv[1])    
     #建立溝通介面
     #在這裡會先要求輸入port，如果輸入quit則斷線
     interf = interface.interface()   
@@ -88,8 +88,11 @@ def main():
             if solution == "haha":
                 complete = True
             else:
+<<<<<<< HEAD
                 complete = False
 
+=======
+>>>>>>> 7f59b9c0e4ae4b6d8aad314a224e694c47768a54
                 interf.tell_you("Shortest path: {}".format(solution))
             
         interf.tell_you("Mission completed!")

@@ -32,10 +32,13 @@ class interface:
         print("start send action.")
         self.ser.SerialWrite(dirc)
         print("action sent.\n")
+<<<<<<< HEAD
         print("start send action.")
         self.ser.SerialWrite(dirc)
         print("action sent.\n")
 
+=======
+>>>>>>> 7f59b9c0e4ae4b6d8aad314a224e694c47768a54
         #return self.ser.SerialReadString()   #確認有接收到指令
 
     def arrival(self):

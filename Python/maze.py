@@ -32,9 +32,9 @@ class Maze:
             dis_list = []
             for d in range(1,5): 
                 if self.raw_data[i][d] > 0:
-                    self.nodes[i].setSuccessor(int(self.raw_data[i][d]), d, int(self.raw_data[i][d+4]))
+                    self.nodes[i].setSuccessor(int(self.raw_data[i][d]), d, int(self.raw_data[i][d+4]+1))
                     ad_list.append(int(self.raw_data[i][d]))
-                    dis_list.append(int(self.raw_data[i][d+4]))
+                    dis_list.append(int(self.raw_data[i][d+4]+1))
             self.nd_dict[int(self.raw_data[i][0])] = ad_list
             if len(ad_list) == 1:
                 self.nodes[i].unvisited_deadend = True
@@ -124,7 +124,7 @@ class Maze:
                     distance[ad[0]-1] = d_new
                     pre[ad[0]-1] = nearest+1
             completed.append(nearest+1) 
-        return distance[nd_to-1]
+        #return distance[nd_to-1]
         # print route to nd_to
         route = [nd_from , nd_to]
         pre_node = pre[nd_to-1]
@@ -171,7 +171,7 @@ def test():
     nd = 1
     complete = False
     while not complete:
-        s = maze.strategy(nd)[0]
+        s = maze.strategy(nd)
         if s == 'haha':
             complete = True
         else:
@@ -227,6 +227,9 @@ def test3():
     print(bcs)
     print(dcs)
     
-
+def test4():
+    maze = Maze("data\large_maze.csv")
+    maze.setNode()
+    print(maze.strategy_2(43,20))
 if __name__ == '__main__':
     test3()
