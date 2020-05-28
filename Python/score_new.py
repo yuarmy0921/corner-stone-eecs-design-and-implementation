@@ -115,9 +115,5 @@ if __name__ == '__main__':
     myScoreboard = Scoreboard(None, '藤原豆腐店', 1)
     #myScoreboard.add_UID("B08676A2")
     #myScoreboard.add_UID("0087A9AB")
-<<<<<<< HEAD
-    
-=======
     #myScoreboard.Socket.emit("stop_game")
->>>>>>> 7f59b9c0e4ae4b6d8aad314a224e694c47768a54
     print(myScoreboard.getCurrentScore())
