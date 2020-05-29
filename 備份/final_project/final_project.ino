@@ -88,8 +88,16 @@ double error;
 int flag=0;
 int delayfornodes=0;
 void Sensor(){
+<<<<<<< HEAD:備份/final_project/final_project.ino
+  l3 = analogRead(L3);
+  l2 = analogRead(L2);
+  l1 = analogRead(L1);
+  r1 = analogRead(R1);
+  r2 = analogRead(R2);
+  r3 = analogRead(R3);
+=======
   
-  if(ask_BT()==5){flag=1;Serial.println("Now i can move");  Serial.println("full version");MotorWriting(90,90);}
+  if(ask_BT()==5){flag=1;Serial.println("Now i can move");  Serial.println("full version");}
   
   if(ask_BT()==4){flag=0;Serial.println("Stop!!!!");}  
   
@@ -98,34 +106,32 @@ void Sensor(){
       Serial.println("i find a node!");
       send_msg('k');
       MotorWriting(0,0);
-      delay(400);
+      delay(500);
       
       BT_CMD instruct;
       instruct = ask_BT();
       
       if(instruct==NOTHING){
         MotorWriting(150,150);
-        delay(230);//860isok
+        delay(240);//860isok
         MotorWriting(0,0);
-        delay(400);
+        delay(400);        
          l3 = analogRead(L3);
          l2 = analogRead(L2);
          l1 = analogRead(L1);
          r1 = analogRead(R1);
          r2 = analogRead(R2);
          r3 = analogRead(R3);
-         if(l1+l2+l3+r1+r2+r3<1000){MotorWriting(80,-80);delay(400);MotorWriting(0,0);delay(400);}
-         while(l1+l2+r1+r2+r3<900){     
-         l3 = analogRead(L3);
-         l2 = analogRead(L2);
-         l1 = analogRead(L1);
-         r1 = analogRead(R1);
-         r2 = analogRead(R2);
-         r3 = analogRead(R3);
-         MotorWriting(-85,80);
+         if(l1+l2+l3+r1+r2+r3<1000){MotorWriting(80,-80);delay(150);MotorWriting(0,0);delay(400);}
+         while(l1+l2+r1+r2<900){     
+           l3 = analogRead(L3);
+           l2 = analogRead(L2);
+           l1 = analogRead(L1);
+           r1 = analogRead(R1);
+           r2 = analogRead(R2);
+           r3 = analogRead(R3);
+           MotorWriting(0,80);
          }
-         MotorWriting(0,0);
-         delay(50);
    
       
         delayfornodes=1;
@@ -148,15 +154,12 @@ void Sensor(){
         delay(100);*/
         left_turn();
         
-       
+        Serial.println("LLLLLLLLL");
         delayfornodes=1;
        }//讓車子剛好走到底，未調整
       if(instruct==READ){
-        
+        Serial.println("UUUUUUUUUU");
         //讀卡片rfid
-        MotorWriting(-100,-100);
-        delay(240);//860isok
-        MotorWriting(0,0);     
         byte* id;
         byte idSize = 0;
         id = rfid(idSize);
@@ -176,10 +179,7 @@ void Sensor(){
           else {second = ask_BT();}
          }
         //需考慮rfid開頭跟n一樣時的可能性
-        MotorWriting(100,100);
-        delay(140);//860isok
-        MotorWriting(0,0);
-        delay(400);
+        
         U_turn();
         delayfornodes=1;
       }
@@ -195,6 +195,7 @@ void Sensor(){
   else{
     MotorWriting(0,0);
   }
+>>>>>>> f8e864a392eb8c871ab5e16db27e8e03a0cfa7bf:Arduino/final_project/final_project.ino
 }
  
 // variable for motor power
@@ -207,6 +208,7 @@ enum ControlState
    SEARCH_STATE,
 };
 
+<<<<<<< HEAD:Arduino/final_project/final_project.ino
 ControlState _state=HAULT_STATE;
 
 // enum for bluetooth message, reference in bluetooth.h line 2
@@ -215,46 +217,52 @@ int small = 0;int yee = 0;
 void loop()
 { 
   l3 = analogRead(L3);
+=======
+
+void loop()
+<<<<<<< HEAD:備份/final_project/final_project.ino
+{
+  if(lastInstruct == instruct){
+    PID_control(l3, l2, l1, r1, r2, r3);
+    MotorWriting(70-error_, 70+error_);   //輸入：左 右
+    } 
+  else{
+    //一直轉直到error > 0
+    //再回到循跡模式
+    if(instruct == TURNRIGHT){
+      while(error == 0){
+        right_turn();
+        error = PID_control(l3, l2, l1, r1, r2, r3);
+      }
+    } else if(instruct == TURNLEFT){
+      while(error == 0){
+        left_turn();
+        error = PID_control(l3, l2, l1, r1, r2, r3);
+      }
+    } else {
+    
+    }
+  } 
+ 
+=======
+{ l3 = analogRead(L3);
+>>>>>>> 1a35dbe27b9e71ec66488cbd167f7f0aac8c0d1f:備份/final_project/final_project.ino
   l2 = analogRead(L2);
   l1 = analogRead(L1);
   r1 = analogRead(R1);
   r2 = analogRead(R2);
   r3 = analogRead(R3);
   //right_turn();
-  Sensor();
-  //MotorWriting(70,76);
+  //Sensor();
+  MotorWriting(70,76);
   //PID_control(l3,l2,l1,r1,r2,r3);
-  /*      MotorWriting(-70,-70);
-        delay(100);//860isok
-        MotorWriting(0,0);
-        delay(400);
-  U_turn();*/
-  /*if(l3+l2+l1+r1+r2+r3>4000){ 
-  MotorWriting(150,150);
-        delay(200);//860isok
-        MotorWriting(0,0);
-        delay(400);
-         l3 = analogRead(L3);
-         l2 = analogRead(L2);
-         l1 = analogRead(L1);
-         r1 = analogRead(R1);
-         r2 = analogRead(R2);
-         r3 = analogRead(R3);
-         if(l1+l2+l3+r1+r2+r3<1000){MotorWriting(80,-80);delay(400);MotorWriting(0,0);delay(400);}
-         while(l1+l2+r1+r2+r3<900){     
-         l3 = analogRead(L3);
-         l2 = analogRead(L2);
-         l1 = analogRead(L1);
-         r1 = analogRead(R1);
-         r2 = analogRead(R2);
-         r3 = analogRead(R3);
-         MotorWriting(-85,80);
-         }
-         MotorWriting(0,0);
-         delay(50);
-   }
-  
-  else{PID_control(l3,l2,l1,r1,r2,r3);}*/
+  //U_turn();
+<<<<<<< HEAD:Arduino/final_project/final_project.ino
+  //if(l3+l2+l1+r1+r2+r3>4000){right_turn();}
+  //else{PID_control(l3,l2,l1,r1,r2,r3);}
+=======
+<<<<<<< HEAD:Arduino/final_project/final_project.ino
+>>>>>>> 42a9292c7bb614f56512aeed54277e240dede22d:備份/final_project/final_project.ino
   /*if(l3+l2+l1+r1+r2+r3>4000&&small%3==0&&yee==0){right_turn();small++;}
   if(l3+l2+l1+r1+r2+r3>4000&&small%3==1&&yee==0){right_turn();small++;}
   if(l3+l2+l1+r1+r2+r3>4000&&small%3==2&&yee==0){MotorWriting(0,0);delay(500);U_turn();small++;yee++;}
@@ -262,6 +270,9 @@ void loop()
   if(l3+l2+l1+r1+r2+r3>4000&&small%3==1&&yee==0){left_turn();small++;}
   if(l3+l2+l1+r1+r2+r3>4000&&small%3==2&&yee==0){MotorWriting(0,0);delay(500);U_turn();small++;yee++;}
   else{PID_control(l3,l2,l1,r1,r2,r3);}*/
+=======
+>>>>>>> f8e864a392eb8c871ab5e16db27e8e03a0cfa7bf:Arduino/final_project/final_project.ino
+>>>>>>> 1a35dbe27b9e71ec66488cbd167f7f0aac8c0d1f:備份/final_project/final_project.ino
    /*
    // search graph
    if(_state == SEARCH_STATE) Search_Mode();

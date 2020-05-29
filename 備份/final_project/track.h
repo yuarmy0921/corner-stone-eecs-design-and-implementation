@@ -79,7 +79,8 @@ void tracking(int l3,int l2,int l1,int r1,int r2,int r3){
 }// tracking
 
 //test
-void PID_control(int l3,int l2,int l1,int r1,int r2,int r3){
+
+float PID_control(int l3,int l2,int l1,int r1,int r2,int r3){
   //當越外側讀到的值越大，error越大
   //設定right為正，left為負
   //採樣週期
@@ -91,11 +92,16 @@ void PID_control(int l3,int l2,int l1,int r1,int r2,int r3){
   //SumError += error_;
   error_ = Kp*error_ + Ki*SumError + Kd*(error_- LastError);
   LastError = error_;
-  
+  return error_;
   //Serial.println(error_);
          
-  MotorWriting(76+error_,76-error_);   //輸入：左 右
+<<<<<<< HEAD:備份/final_project/track.h
+  
+  /*Serial.println(" ");
+=======
+  MotorWriting(70+error_,70-error_);   //輸入：左 右
  /* Serial.println(" ");
+>>>>>>> f8e864a392eb8c871ab5e16db27e8e03a0cfa7bf:Arduino/final_project/track.h
   Serial.print("error: ");
   Serial.println(error_);
   Serial.print("left: ");

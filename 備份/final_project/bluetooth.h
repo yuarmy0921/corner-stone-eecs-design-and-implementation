@@ -22,16 +22,16 @@ BT_CMD ask_BT(){
       // TODO:
       // 1. get cmd from SoftwareSerial object: BT
       cmd = BT.read();
-      
+      BT.write(cmd);
       // 2. link bluetooth message to your own command type
-      if(cmd =='1'){message=NOTHING; Serial.println(message);BT.write(cmd);}
-      if(cmd =='3'){message=TURNRIGHT; Serial.println(message);BT.write(cmd);}
-      if(cmd =='4'){message=TURNLEFT; Serial.println(message);BT.write(cmd);}
-      if(cmd =='2'){message=READ; Serial.println(message);BT.write(cmd);}
-      if(cmd =='5'){message=HAULT; Serial.println(message);BT.write(cmd);}
-      if(cmd =='s'){message=START; Serial.println(message);BT.write(cmd);}
-      if(cmd =='c'){message=RESTART;Serial.println("i can move again" );BT.write(cmd);}
-      if(cmd =='g'){message=TIGHT;BT.write(cmd);}
+      if(cmd =='1'){message=NOTHING; Serial.println(message);}
+      if(cmd =='3'){message=TURNRIGHT; Serial.println(message);}
+      if(cmd =='4'){message=TURNLEFT; Serial.println(message);}
+      if(cmd =='2'){message=READ; Serial.println(message);}
+      if(cmd =='5'){message=HAULT; Serial.println(message);}
+      if(cmd =='s'){message=START; Serial.println(message);}
+      if(cmd =='c'){message=RESTART;Serial.println("i can move again" );}
+      if(cmd =='g'){message=TIGHT;}
       #ifdef DEBUG
       Serial.print("cmd : ");
       Serial.println(cmd);

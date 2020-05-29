@@ -32,9 +32,9 @@ class Maze:
             dis_list = []
             for d in range(1,5): 
                 if self.raw_data[i][d] > 0:
-                    self.nodes[i].setSuccessor(int(self.raw_data[i][d]), d, int(self.raw_data[i][d+4]))
+                    self.nodes[i].setSuccessor(int(self.raw_data[i][d]), d, int(self.raw_data[i][d+4]+1))
                     ad_list.append(int(self.raw_data[i][d]))
-                    dis_list.append(int(self.raw_data[i][d+4]))
+                    dis_list.append(int(self.raw_data[i][d+4]+1))
             self.nd_dict[int(self.raw_data[i][0])] = ad_list
             if len(ad_list) == 1:
                 self.nodes[i].unvisited_deadend = True
@@ -87,6 +87,7 @@ class Maze:
             if distance[node-1] < distance[nearest-1]:
                 nearest = node
         print('Nearest: Node', nearest)
+        print('Distance:', distance[nearest-1])
     
         # print route to the nearest score point
         route = [nd, nearest]
@@ -94,8 +95,9 @@ class Maze:
         while pre_node != nd:
             route.insert(1, pre_node)
             pre_node = pre[pre_node-1]
+        route = route + [route[-2]]
         print('Route:', route, '\n')
-        return route
+        return route #, distance
 
     def Dijk_2(self, nd_from, nd_to):
         """ for game mode 2.
@@ -122,13 +124,14 @@ class Maze:
                     distance[ad[0]-1] = d_new
                     pre[ad[0]-1] = nearest+1
             completed.append(nearest+1) 
-        
+        #return distance[nd_to-1]
         # print route to nd_to
         route = [nd_from , nd_to]
         pre_node = pre[nd_to-1]
         while pre_node != nd_from:
             route.insert(1, pre_node)
             pre_node = pre[pre_node-1]
+        route = route + [route[-2]]
         print('From %d to %d, Route:'%(nd_from, nd_to), route)
         return route
 
@@ -163,9 +166,70 @@ class Maze:
         return self.Dijk_2(nd_from, nd_to)
 
 def test():
-    maze = Maze("data\small_maze.csv")
+    maze = Maze("data\large_maze.csv")
     maze.setNode()
-    for i in range(1, maze.numbers+1):
-        maze.Dijk(i)
+    nd = 1
+    complete = False
+    while not complete:
+        s = maze.strategy(nd)
+        if s == 'haha':
+            complete = True
+        else:
+            nd = s[-1]
+            maze.nodes[s[-2]-1].unvisited_deadend = False
+            
+def test2():
+    maze = Maze("data\large_maze.csv")
+    maze.setNode()
+    score = []  # unvisited deadend
+    for i in maze.nodes:
+        if i.unvisited_deadend and i.index != 1:
+            score.append(i.index)
+    dis = maze.strategy(1)[1]
+    d = []
+    for i in score:
+        d.append(dis[i-1])
+    print(d)
+    print(sum(d))
+
+def test3():
+    maze = Maze("data\large_maze.csv")
+    maze.setNode()
+    B = [13,8,20,24,19,4,36,41,33,44]
+    D = [13,8,24,19,4,36,41,44,20,33]
+    o = maze.strategy_2(1, 13)
+    b = [o]
+    d = [o]
+    b_score = [o]
+    d_score = [o]
+    bcd = [o]
+    dcd = [o]
+    bcs = [o]
+    dcs = [o]
+    for i in range(len(B)-1):
+        b.append(maze.strategy_2(B[i], B[i+1]))
+        d.append(maze.strategy_2(D[i], D[i+1]))
+        bcd.append(bcd[-1] + b[-1])
+        dcd.append(dcd[-1] + d[-1])
+        b_score.append(maze.strategy_2(1, B[i+1]))
+        d_score.append(maze.strategy_2(1, D[i+1]))
+        bcs.append(bcs[-1] + b_score[-1])
+        dcs.append(dcs[-1] + d_score[-1])
+
+    print(b)
+    print(d, "\n")
+    print(b_score)
+    print(d_score, "\n") 
+    print('culmulate distance')
+    print(bcd)
+    print(dcd, "\n")
+    print('culmulate score')
+    print(bcs)
+    print(dcs)
+    
+def test4():
+    maze = Maze("data\large_maze.csv")
+    maze.setNode()
+    print(maze.strategy_2(43,20))
 if __name__ == '__main__':
-    test()
+    test3()

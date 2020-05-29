@@ -18,67 +18,47 @@ int extern _Tp;
 // here are something you can try: left_turn, right_turn... etc.
 
 void right_turn(){
-   /*MotorWriting(150,150);
-   delay(250);//240isok
+<<<<<<< HEAD:備份/final_project/node.h
+   MotorWriting(-60,60);
+}
+void left_turn(){
+  MotorWriting(60,-60);
+}
+void U_turn(){
+   MotorWriting(50,-50);
+   
+=======
+   MotorWriting(150,150);
+   delay(240);//860isok
    MotorWriting(0,0);
    delay(300);
    MotorWriting(100,-100);
-   delay(370);//860isok
+   delay(400);//860isok
    MotorWriting(0,0);
-   delay(400);
+   delay(500);
   l3 = analogRead(L3);
   l2 = analogRead(L2);
   l1 = analogRead(L1);
   r1 = analogRead(R1);
   r2 = analogRead(R2);
   r3 = analogRead(R3);
-   while(l1+l2+l3+r1+r2<800){
+   while(l1+l2+l3+r1+r2<900){
      l3 = analogRead(L3);
   l2 = analogRead(L2);
   l1 = analogRead(L1);
   r1 = analogRead(R1);
   r2 = analogRead(R2);
   r3 = analogRead(R3);
-     MotorWriting(80,-80);
-     
-   }
-   MotorWriting(0,0);
-   delay(100);
-   Serial.println("trun over");
-   
- */
- MotorWriting(150,150);
-   delay(250);//240isok
-   MotorWriting(0,0);
-   delay(300);
-   MotorWriting(100,-100);
-   delay(420);//860isok
-   MotorWriting(0,0);
-   delay(300);
-   MotorWriting(-100,-100);
-   delay(210);//860isok
-   MotorWriting(0,0);
-   delay(50);
-   
-  l3 = analogRead(L3);
-  l2 = analogRead(L2);
-  l1 = analogRead(L1);
-  r1 = analogRead(R1);
-  r2 = analogRead(R2);
-  r3 = analogRead(R3);
-   while(l1+l2+r1+r2+l3<900){
-     l3 = analogRead(L3);
-  l2 = analogRead(L2);
-  l1 = analogRead(L1);
-  r1 = analogRead(R1);
-  r2 = analogRead(R2);
-  r3 = analogRead(R3);
-     MotorWriting(80,-80);
+     MotorWriting(100,-100);
+     delay(50);
+         MotorWriting(0,0);
+         delay(30);
    }
    MotorWriting(0,0);
      delay(100);
    Serial.println("trun over");
-   MotorWriting(70,70);
+   
+ 
 }
 void left_turn(){
  /*MotorWriting(-80,80);
@@ -105,14 +85,14 @@ void left_turn(){
    }
    Serial.println("trun over");
    */
-    MotorWriting(150,150);
-   delay(250);//240isok
+   MotorWriting(150,150);
+   delay(280);//860isok
    MotorWriting(0,0);
    delay(300);
    MotorWriting(-100,100);
    delay(400);//860isok
    MotorWriting(0,0);
-   delay(300);
+   delay(500);
   l3 = analogRead(L3);
   l2 = analogRead(L2);
   l1 = analogRead(L1);
@@ -126,37 +106,42 @@ void left_turn(){
   r1 = analogRead(R1);
   r2 = analogRead(R2);
   r3 = analogRead(R3);
-     MotorWriting(-80,80);
+     MotorWriting(-100,100);
+     delay(50);
+         MotorWriting(0,0);
+         delay(30);
    }
    MotorWriting(0,0);
      delay(100);
    Serial.println("trun over");
-    MotorWriting(70,70);
+   
  
 }
 void U_turn(){
    //MotorWriting(70,76);
    //delay(500);
    MotorWriting(100,-110);
-   delay(760);//860isok
+   delay(840);//860isok
    MotorWriting(0,0);
    delay(500);
-  l3 = analogRead(L3);
+    l3 = analogRead(L3);
   l2 = analogRead(L2);
   l1 = analogRead(L1);
   r1 = analogRead(R1);
   r2 = analogRead(R2);
   r3 = analogRead(R3);
-   while(l3+l2+l1+r1+r2<900){
-  l3 = analogRead(L3);
+   while(l2+l1+r1+r2<900){
+     l3 = analogRead(L3);
   l2 = analogRead(L2);
   l1 = analogRead(L1);
   r1 = analogRead(R1);
   r2 = analogRead(R2);
   r3 = analogRead(R3);
-     MotorWriting(-85,80);
-     
+     MotorWriting(-75,75);
+     delay(80);
+     MotorWriting(0,0);
+     delay(30);
    }
-   delay(100);
    Serial.println("trun over");
+>>>>>>> f8e864a392eb8c871ab5e16db27e8e03a0cfa7bf:Arduino/final_project/node.h
 }
