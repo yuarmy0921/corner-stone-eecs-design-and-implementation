@@ -13,12 +13,23 @@ import os
 #執行的任務：匯入迷宮、紀錄分數、創建溝通介面、決定遊戲模式
 def main():
     #讀取迷宮
+<<<<<<< HEAD
     maze = mz.Maze("data/small_maze.csv")
+=======
+    maze = mz.Maze("data/final_map.csv")
+    while True:
+        try:
+            interf = interface.interface()
+            time.sleep(3)
+            break
+        except:
+            pass 
+>>>>>>> 6a88a4b7f5079e58aede62d5cd502295f011db22
     #建立計分表 在執行檔案時記得把遊戲模式當參數傳入!!!!
-    point = score_new.Scoreboard("data/UID.csv", "Gru", sys.argv[1])    
+    point = score_new.Scoreboard("data/medium_maze_UID.csv", "Gru", sys.argv[1])    
     #建立溝通介面
     #在這裡會先要求輸入port，如果輸入quit則斷線
-    interf = interface.interface()   
+    
     # TODO : Initialize necessary variables
     maze.setNode()
     maze.nd_dict["h"] = "haha"
@@ -30,7 +41,7 @@ def main():
         print("Mode 0: for treasure-hunting with rule 1")
         # TODO : for treasure-hunting with rule 1, which encourages you to hunt as many scores as possible
         interf.send_action(input("Press s to activate: "))
-        car_dir = 1                                                             
+        car_dir = 2                                                             
         #找到完整路徑(最近)
         interf.tell_you("---------------------------------------------------------------------------")
         solution = maze.strategy(1)
@@ -89,7 +100,10 @@ def main():
                 complete = True
             else:
                 complete = False
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6a88a4b7f5079e58aede62d5cd502295f011db22
                 interf.tell_you("Shortest path: {}".format(solution))
             
         interf.tell_you("Mission completed!")
@@ -100,16 +114,15 @@ def main():
         except:
             interf.end_process()
         
-
     elif (sys.argv[1] == '1'):
         print("Mode 1: for treasure-hunting with rule 2")
         # TODO : for treasure-hunting with rule 2, which requires you to hunt as many specified treasures as possible
         car_dir = 2
         UID = 0
         #傳送開始指令給車
+        route = [1, 8, 24, 44, 41, 36]
         interf.send_action(input("Press s to start: "))
         cp = 1 # current point's order
-        route = point.sequence
         while cp < len(route):
             #找到路徑
             solution = maze.strategy_2(route[cp-1], route[cp])
@@ -132,6 +145,9 @@ def main():
                         time.sleep(1)
                         try:
                             UID = interf.get_UID()
+                            print("UID ------", UID)
+                            if len(UID) != 8:
+                                UID = ""
                         except:
                             interf.tell_you("Wrong format")
                     interf.send_action("c")

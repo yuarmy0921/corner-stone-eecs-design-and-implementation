@@ -13,6 +13,7 @@ class Node:
         # store successor as (Node, direction to node, distance)
         self.Successors = []
         self.unvisited_deadend = False
+        self.score = 0 ###
 
     def getIndex(self):
         """ output: index (int). """

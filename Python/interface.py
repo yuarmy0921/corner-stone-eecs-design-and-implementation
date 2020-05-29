@@ -1,6 +1,6 @@
 import BT
 import maze
-import score
+import score_new
 
 # hint: You may design additional functions to execute the input command, which will be helpful when debugging :)
 #幾個基本的function：讀取RFID、傳送指令、結束
@@ -32,7 +32,10 @@ class interface:
         print("start send action.")
         self.ser.SerialWrite(dirc)
         print("action sent.\n")
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6a88a4b7f5079e58aede62d5cd502295f011db22
         #return self.ser.SerialReadString()   #確認有接收到指令
 
     def arrival(self):
