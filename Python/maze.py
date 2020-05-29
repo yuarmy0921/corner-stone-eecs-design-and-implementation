@@ -166,8 +166,9 @@ class Maze:
         return self.Dijk_2(nd_from, nd_to)
 
 def test():
-    maze = Maze("data\large_maze.csv")
+    maze = Maze(r"data\final_map.csv")
     maze.setNode()
+    #maze.dis_list[3] = 50
     nd = 1
     complete = False
     while not complete:
@@ -193,43 +194,32 @@ def test2():
     print(sum(d))
 
 def test3():
-    maze = Maze("data\large_maze.csv")
+    maze = Maze(r"data\final_map.csv")
     maze.setNode()
-    B = [13,8,20,24,19,4,36,41,33,44]
-    D = [13,8,24,19,4,36,41,44,20,33]
+    D = [13,8,24,19,4,32,36,41,44,20,33]
     o = maze.strategy_2(1, 13)
-    b = [o]
     d = [o]
-    b_score = [o]
     d_score = [o]
-    bcd = [o]
     dcd = [o]
-    bcs = [o]
     dcs = [o]
-    for i in range(len(B)-1):
-        b.append(maze.strategy_2(B[i], B[i+1]))
+    for i in range(len(D)-1):
         d.append(maze.strategy_2(D[i], D[i+1]))
-        bcd.append(bcd[-1] + b[-1])
         dcd.append(dcd[-1] + d[-1])
-        b_score.append(maze.strategy_2(1, B[i+1]))
         d_score.append(maze.strategy_2(1, D[i+1]))
-        bcs.append(bcs[-1] + b_score[-1])
         dcs.append(dcs[-1] + d_score[-1])
 
-    print(b)
-    print(d, "\n")
-    print(b_score)
-    print(d_score, "\n") 
+    print(d)
+    print(d_score) 
     print('culmulate distance')
-    print(bcd)
-    print(dcd, "\n")
+    print(dcd)
     print('culmulate score')
-    print(bcs)
     print(dcs)
     
 def test4():
-    maze = Maze("data\large_maze.csv")
+    maze = Maze(r"data\final_map.csv")
     maze.setNode()
-    print(maze.strategy_2(43,20))
+    route = [1,8,24,44,41,36]
+    for i in range(len(route)-1):
+        maze.strategy_2(route[i], route[i+1])
 if __name__ == '__main__':
-    test3()
+    test4()

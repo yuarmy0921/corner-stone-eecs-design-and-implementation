@@ -13,12 +13,19 @@ import os
 #執行的任務：匯入迷宮、紀錄分數、創建溝通介面、決定遊戲模式
 def main():
     #讀取迷宮
-    maze = mz.Maze("data/small_maze.csv")
+    maze = mz.Maze("data/final_map.csv")
+    while True:
+        try:
+            interf = interface.interface()
+            time.sleep(3)
+            break
+        except:
+            pass 
     #建立計分表 在執行檔案時記得把遊戲模式當參數傳入!!!!
-    point = score_new.Scoreboard("data/UID.csv", "Gru", sys.argv[1])    
+    point = score_new.Scoreboard("data/medium_maze_UID.csv", "Gru", sys.argv[1])    
     #建立溝通介面
     #在這裡會先要求輸入port，如果輸入quit則斷線
-    interf = interface.interface()   
+    
     # TODO : Initialize necessary variables
     maze.setNode()
     maze.nd_dict["h"] = "haha"
@@ -99,15 +106,13 @@ def main():
         except:
             interf.end_process()
         
-
     elif (sys.argv[1] == '1'):
         print("Mode 1: for treasure-hunting with rule 2")
         # TODO : for treasure-hunting with rule 2, which requires you to hunt as many specified treasures as possible
         car_dir = 2
         UID = 0
         #傳送開始指令給車
-        sequence_str = input("Enter your sequence (by index, split by spacebars): ")
-        route = list(map(int, sequence_str.split(' ')))
+        route = [1, 8, 24, 44, 41, 36]
         interf.send_action(input("Press s to start: "))
         cp = 1 # current point's order
         while cp < len(route):

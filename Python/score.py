@@ -31,11 +31,10 @@ class Scoreboard:
 
         elif self.game == 1:
             # data member specific for Game2: self.sequence, self.sequence_idx
+            self.sequence_idx = 0
+            self.sequence = 
             print ("Successfully read the UID file!")
             print("CardList:", list(map(hex, self.cardList)))
-            sequence_str = input("Enter your sequence (by index, split by spacebars): ")
-            self.sequence = list(map(int, sequence_str.split(' ')))
-            self.sequence_idx = 0
 
     def add_UID(self, UID_str):
         UID = int(UID_str,16)

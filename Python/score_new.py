@@ -112,7 +112,7 @@ class Socket(socketio.ClientNamespace):
 
 
 if __name__ == '__main__':
-    myScoreboard = Scoreboard(None, '藤原豆腐店', 1)
+    myScoreboard = Scoreboard(None, '藤原', 1)
     #myScoreboard.add_UID("B08676A2")
     #myScoreboard.add_UID("0087A9AB")
     #myScoreboard.Socket.emit("stop_game")
